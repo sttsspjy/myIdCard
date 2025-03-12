@@ -6,15 +6,15 @@ const Home = () => {
   // Split the text by periods and format with line breaks
   const bioText = `Guy. 2000-born in Seoul. 
   INTJ
-Reads and speaks decent English
-Pessimistic. 
+  Pessimistic
+I can speak English.
 
-5 years at Seoul Gaewon Elemantary School
-1 year at Seri Insan Borneo International School
-2 years at Sabah Tsung Tsin Secondary School
-5 years at Sayfol International School
+Seoul Gaewon Elemantary School
+Seri Insan Borneo International School
+Sabah Tshung Tsin Secondary School
+Sayfol International School
 IGCSE O & A-level participant
-Bachelor of Science at University of Melbourne
+University of Melbourne Graduate
 Completed military service
 
 Metacognition keeps me alive, 

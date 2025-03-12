@@ -1,9 +1,10 @@
-import { Box, Flex, Link as ChakraLink, Spacer, IconButton } from '@chakra-ui/react'
+import { Box, Flex, Link as ChakraLink, Spacer, IconButton, useBreakpointValue } from '@chakra-ui/react'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { Link as RouterLink } from 'react-router-dom'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 
 const Navbar = () => {
+  const iconSize = useBreakpointValue({ base: "sm", md: "md" });
   const { colorMode, toggleColorMode } = useColorMode()
   
   return (
@@ -25,7 +26,7 @@ const Navbar = () => {
             aria-label="Toggle dark mode"
             as={colorMode === 'dark' ? SunIcon : MoonIcon}
             onClick={toggleColorMode}
-            size="md"
+            size={iconSize}
             variant="ghost"
           />
         </Flex>
