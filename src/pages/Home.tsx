@@ -25,7 +25,7 @@ Find me at the peak of "Mount Stupid".
 
 Everyone else is stupid.`
 
-  // Social media links
+  // links
   const socialLinks = [
     { name: 'Facebook', url: 'https://www.facebook.com/jaeyoung.park.334491/', icon: FaFacebook },
     { name: 'GitHub', url: 'https://github.com/sttsspjy', icon: FaGithub },
@@ -50,7 +50,7 @@ Everyone else is stupid.`
         {bioText}
       </Text>
       
-      {/* Social Media Icons */}
+      {/* Icons */}
       <HStack spacing={6} pt={2}>
         {socialLinks.map((social) => {
           const IconComponent = social.icon;
