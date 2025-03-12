@@ -10,7 +10,7 @@ const Navbar = () => {
     <Box bg="white" _dark={{ bg: 'gray.900' }} px={4} shadow="sm">
       <Flex h={16} alignItems="center" maxW="container.xl" mx="auto">
         <RouterLink to="/">
-          <ChakraLink fontSize="xl" fontWeight="bold" color="gray.800" _dark={{ color: 'gray.100' }}>
+          <ChakraLink fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold" color="gray.800" _dark={{ color: 'gray.100' }}>
             Hi.
           </ChakraLink>
         </RouterLink>

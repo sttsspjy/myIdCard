@@ -8,11 +8,11 @@ const About = () => {
     React, Chakra UI, Cursor.`
   return (
     <VStack gap={8} alignItems="flex-start">
-      <Heading size="xl" color="gray.800" _dark={{ color: 'gray.100' }}>
+      <Heading size={{ base: "xl", md: "2xl" }} color="gray.800" _dark={{ color: 'gray.100' }}>
         Shoutouts
       </Heading>
       <Text 
-        fontSize="lg" 
+        fontSize={{ base: "md", md: "lg" }} 
         color="gray.600" 
         _dark={{ color: 'gray.300' }}
         whiteSpace="pre-line"

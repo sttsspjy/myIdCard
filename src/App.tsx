@@ -42,7 +42,7 @@ function App() {
                 <Box py={8} px={4} width="100%" display="flex" flexDirection="column" alignItems="center">
                   {/* Heading outside the white container */}
                   <Box width="100%" textAlign="center" mb={16}>
-                    <Box as="h1" fontSize="100px" fontWeight="bold" color="gray.800" _dark={{ color: 'gray.100' }}>
+                    <Box as="h1" fontSize={{ base: "40px", md: "100px" }} fontWeight="bold" color="gray.800" _dark={{ color: 'gray.100' }}>
                       Jaeyoung Park
                     </Box>
                   </Box>

@@ -1,4 +1,4 @@
-import { Heading, Text, Button, VStack, HStack, Link as ChakraLink } from '@chakra-ui/react'
+import { Heading, Text, Button, VStack, HStack, Link as ChakraLink, useBreakpointValue } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { FaFacebook, FaGithub, FaSteam } from 'react-icons/fa'
 
@@ -9,12 +9,12 @@ const Home = () => {
 Reads and speaks decent English
 Pessimistic. 
 
-5 years at Seoul Gaewon Elemantary School, Korea
-1 year at Seri Insan Borneo International School, Malaysia
-2 years at Sabah Tsung Tsin Secondary School, Malaysia
-5 years at Sayfol International School, Malaysia
+5 years at Seoul Gaewon Elemantary School
+1 year at Seri Insan Borneo International School
+2 years at Sabah Tsung Tsin Secondary School
+5 years at Sayfol International School
 IGCSE O & A-level participant
-Graduated with Bachelor of Science at University of Melbourne, Australia
+Bachelor of Science at University of Melbourne
 Completed military service
 
 Metacognition keeps me alive, 
@@ -31,19 +31,21 @@ Everyone else is stupid.`
     { name: 'GitHub', url: 'https://github.com/sttsspjy', icon: FaGithub },
     { name: 'Steam', url: 'https://steamcommunity.com/profiles/76561198254379003', icon: FaSteam }
   ]
+  const iconSize = useBreakpointValue({ base: 20, md: 24 });
 
   return (
     <VStack gap={12} alignItems="center" textAlign="center" w="100%">
-      <Heading size="2xl" color="gray.800" _dark={{ color: 'gray.100' }}>
+      <Heading size={{ base: "xl", md: "2xl" }} color="gray.800" _dark={{ color: 'gray.100' }}>
         Me.
       </Heading>
       <Text 
-        fontSize="2xl" 
+        fontSize={{ base: "13px", md: "2xl" }} 
         color="gray.600" 
         _dark={{ color: 'gray.300' }} 
-        maxW="5xl"
+        maxW="10xl"
         whiteSpace="pre-line"
         textAlign="center"
+        px={{ base: 0, md: 0 }}
       >
         {bioText}
       </Text>
@@ -57,7 +59,7 @@ Everyone else is stupid.`
               key={social.name}
               href={social.url} 
               isExternal
-              p={3}
+              p={{ base: 2, md: 3 }}
               borderRadius="full"
               bg="gray.100"
               color="gray.600"
@@ -69,7 +71,7 @@ Everyone else is stupid.`
               }}
               transition="all 0.2s"
             >
-              <IconComponent size={24} />
+              <IconComponent size={iconSize} />
             </ChakraLink>
           );
         })}
@@ -80,7 +82,7 @@ Everyone else is stupid.`
         <Button
           variant="link"
           colorScheme="blue"
-          fontSize="xl"
+          fontSize={{ base: "md", md: "xl" }}
           fontWeight="normal"
           _hover={{
             textDecoration: "underline"
