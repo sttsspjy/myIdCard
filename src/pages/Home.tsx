@@ -25,7 +25,7 @@ Find me at the peak of "Mount Stupid".
 
 Everyone else is stupid.`
 
-  // Social media links with icons
+  // Social media links
   const socialLinks = [
     { name: 'Facebook', url: 'https://www.facebook.com/jaeyoung.park.334491/', icon: FaFacebook },
     { name: 'GitHub', url: 'https://github.com/sttsspjy', icon: FaGithub },
