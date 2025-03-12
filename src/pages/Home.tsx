@@ -13,7 +13,7 @@ Seoul Gaewon Elemantary School
 Seri Insan Borneo International School
 Sabah Tshung Tsin Secondary School
 Sayfol International School
-IGCSE O & A-level participant
+IGCSE O & A-level examinee
 University of Melbourne Graduate
 Completed military service
 
