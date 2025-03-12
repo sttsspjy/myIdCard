@@ -34,7 +34,7 @@ function App() {
     <>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <ChakraProvider theme={theme}>
-        <Router>
+        <Router basename="/myIdCard">
           <Box minH="100vh" bg="gray.50" _dark={{ bg: 'gray.900' }} width="100%">
             <Navbar />
             <Routes>
