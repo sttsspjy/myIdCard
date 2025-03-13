@@ -6,18 +6,54 @@ import { useState, useEffect } from 'react'
 
 const Home = () => {
   // State to track hover
-  const [, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const controls = useAnimation();
 
   // Responsive animation values
-  const itsHiddenX = useBreakpointValue({ base: 40, md: 50, lg: 60 });
-  const itsVisibleX = useBreakpointValue({ base: 15, md: 20, lg: 25 });
-  const meVisibleX = useBreakpointValue({ base: 25, md: 30, lg: 35 });
+  const itsHiddenX = useBreakpointValue({ base: 40, md: 50, lg: 60 }) || 50;
+  const itsVisibleX = useBreakpointValue({ base: 15, md: 20, lg: 25 }) || 20;
+  const meVisibleX = useBreakpointValue({ base: 25, md: 30, lg: 35 }) || 30;
   
-  // Create animation variants with responsive values
+  // Create animation variants with responsive values and initial default values
   const [variants, setVariants] = useState({
-    itsVariants: {},
-    meVariants: {}
+    itsVariants: {
+      hidden: { 
+        x: 50, 
+        opacity: 0,
+        transition: {
+          type: "spring",
+          stiffness: 200,
+          damping: 20
+        }
+      },
+      visible: { 
+        x: 20, 
+        opacity: 1,
+        transition: { 
+          type: "spring", 
+          stiffness: 200,
+          damping: 20
+        }
+      }
+    },
+    meVariants: {
+      hidden: { 
+        x: 0, 
+        transition: {
+          type: "spring",
+          stiffness: 200,
+          damping: 20
+        }
+      },
+      visible: { 
+        x: 30,
+        transition: { 
+          type: "spring", 
+          stiffness: 200,
+          damping: 20
+        }
+      }
+    }
   });
   
   // Update variants when breakpoint values change
@@ -63,6 +99,11 @@ const Home = () => {
       }
     });
   }, [itsHiddenX, itsVisibleX, meVisibleX]);
+
+  // Ensure animation starts in hidden state
+  useEffect(() => {
+    controls.start("hidden");
+  }, [controls]);
 
   // Handle hover events
   const handleHoverStart = () => {
@@ -152,6 +193,7 @@ Everyone else is stupid.`
             _dark={{ color: 'gray.100' }}
             position="absolute"
             right="100%"
+            opacity={isHovered ? 1 : 0}
           >
             It's
           </Heading>
