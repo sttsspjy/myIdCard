@@ -1,8 +1,80 @@
-import { Heading, Text, Button, VStack, HStack, Link as ChakraLink, useBreakpointValue } from '@chakra-ui/react'
+import { Heading, Text, Button, VStack, HStack, Link as ChakraLink, useBreakpointValue, Box } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { FaFacebook, FaGithub, FaSteam } from 'react-icons/fa'
+import { motion, useAnimation } from 'framer-motion'
+import { useState, useEffect } from 'react'
 
 const Home = () => {
+  // State to track hover
+  const [isHovered, setIsHovered] = useState(false);
+  const controls = useAnimation();
+
+  // Responsive animation values
+  const itsHiddenX = useBreakpointValue({ base: 40, md: 50, lg: 60 });
+  const itsVisibleX = useBreakpointValue({ base: 15, md: 20, lg: 25 });
+  const meVisibleX = useBreakpointValue({ base: 25, md: 30, lg: 35 });
+  
+  // Create animation variants with responsive values
+  const [variants, setVariants] = useState({
+    itsVariants: {},
+    meVariants: {}
+  });
+  
+  // Update variants when breakpoint values change
+  useEffect(() => {
+    setVariants({
+      itsVariants: {
+        hidden: { 
+          x: itsHiddenX, 
+          opacity: 0,
+          transition: {
+            type: "spring",
+            stiffness: 200,
+            damping: 20
+          }
+        },
+        visible: { 
+          x: itsVisibleX, 
+          opacity: 1,
+          transition: { 
+            type: "spring", 
+            stiffness: 200,
+            damping: 20
+          }
+        }
+      },
+      meVariants: {
+        hidden: { 
+          x: 0, 
+          transition: {
+            type: "spring",
+            stiffness: 200,
+            damping: 20
+          }
+        },
+        visible: { 
+          x: meVisibleX,
+          transition: { 
+            type: "spring", 
+            stiffness: 200,
+            damping: 20
+          }
+        }
+      }
+    });
+  }, [itsHiddenX, itsVisibleX, meVisibleX]);
+
+  // Handle hover events
+  const handleHoverStart = () => {
+    setIsHovered(true);
+    controls.start("visible");
+  };
+
+  const handleHoverEnd = () => {
+    setIsHovered(false);
+    controls.start("hidden");
+  };
+
   // Split the text by periods and format with line breaks
   const bioText = `Guy. 2000-born in Seoul. 
   INTJ
@@ -33,11 +105,67 @@ Everyone else is stupid.`
   ]
   const iconSize = useBreakpointValue({ base: 20, md: 24 });
 
+  // Animation variants for container
+  const containerVariants = {
+    hidden: {
+      transition: { 
+        staggerChildren: 0,
+        delayChildren: 0
+      }
+    },
+    visible: { 
+      transition: { 
+        staggerChildren: 0,
+        delayChildren: 0
+      }
+    }
+  };
+
   return (
     <VStack gap={12} alignItems="center" textAlign="center" w="100%">
-      <Heading size={{ base: "xl", md: "2xl" }} color="gray.800" _dark={{ color: 'gray.100' }}>
-        Me.
-      </Heading>
+      <Box 
+        as={motion.div}
+        variants={containerVariants}
+        initial="hidden"
+        animate={controls}
+        onHoverStart={handleHoverStart}
+        onHoverEnd={handleHoverEnd}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        cursor="pointer"
+        p={2}
+        position="relative"
+        width="100%"
+      >
+        <Box 
+          position="relative"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Heading 
+            as={motion.h2}
+            variants={variants.itsVariants}
+            size={{ base: "xl", md: "2xl" }} 
+            color="gray.800" 
+            _dark={{ color: 'gray.100' }}
+            position="absolute"
+            right="100%"
+          >
+            It's
+          </Heading>
+          <Heading 
+            as={motion.h2}
+            variants={variants.meVariants}
+            size={{ base: "xl", md: "2xl" }} 
+            color="gray.800" 
+            _dark={{ color: 'gray.100' }}
+          >
+            Me.
+          </Heading>
+        </Box>
+      </Box>
       <Text 
         fontSize={{ base: "13px", md: "2xl" }} 
         color="gray.600" 
