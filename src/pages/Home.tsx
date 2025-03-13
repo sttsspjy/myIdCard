@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 
 const Home = () => {
   // State to track hover
-  const [isHovered, setIsHovered] = useState(false);
+  const [, setIsHovered] = useState(false);
   const controls = useAnimation();
 
   // Responsive animation values
