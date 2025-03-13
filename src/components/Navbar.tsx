@@ -6,15 +6,22 @@ import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 const Navbar = () => {
   const iconSize = useBreakpointValue({ base: "sm", md: "md" });
   const { colorMode, toggleColorMode } = useColorMode()
+  const musicLink = 'https://www.youtube.com/watch?v=mRsUPoFtUtA'
   
   return (
     <Box bg="white" _dark={{ bg: 'gray.900' }} px={4} shadow="sm">
       <Flex h={16} alignItems="center" maxW="container.xl" mx="auto">
-        <RouterLink to="/">
-          <ChakraLink fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold" color="gray.800" _dark={{ color: 'gray.100' }}>
-            Hi.
-          </ChakraLink>
-        </RouterLink>
+        <ChakraLink 
+          href={musicLink} 
+          isExternal 
+          fontSize={{ base: "xl", md: "2xl" }} 
+          fontWeight="bold" 
+          color="gray.800" 
+          _dark={{ color: 'gray.100' }}
+          _hover={{ textDecoration: 'none' }}
+        >
+          Hi.
+        </ChakraLink>
         <Spacer />
         <Flex gap={8} alignItems="center">
           <RouterLink to="/">
