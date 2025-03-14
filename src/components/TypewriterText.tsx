@@ -50,11 +50,6 @@ const TypewriterText = ({
     return () => clearInterval(cursorInterval);
   }, [cursorBlinkSpeed]);
 
-  // Calculate text width for centering
-  //const textLength = displayText.length;
-  //const fullTextLength = text.length;
-  //const progress = textLength / fullTextLength;
-
   // Responsive cursor size
   const cursorHeight = useBreakpointValue({ base: "40px", md: "80px" }) || "40px";
   const cursorWidth = useBreakpointValue({ base: "3px", md: "5px" }) || "3px";

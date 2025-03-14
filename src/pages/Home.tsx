@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { FaFacebook, FaGithub, FaSteam } from 'react-icons/fa'
 import { motion, useAnimation } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import SlotMachineText from '../components/SlotMachineText'
 
 const Home = () => {
   // State to track hover
@@ -128,15 +129,16 @@ Sabah Tshung Tsin Secondary School
 Sayfol International School
 IGCSE O & A-level examinee
 University of Melbourne Graduate
-Completed military service
+Completed military service`;
 
-Metacognition keeps me alive, 
-Underdogma keeps me running,
-Hipsterism keeps me proud.
+  // Slot machine text arrays
+  const firstWords = ["Metacognition", "Underdogma", "Hipsterism", "Curiosity", "Pessimism"];
+  const lastWords = ["alive", "running", "proud", "dreaming", "objective"];
 
+  const additionalText = `
 Find me at the peak of "Mount Stupid".
 
-Everyone else is stupid.`
+Everyone else is stupid.`;
 
   // links
   const socialLinks = [
@@ -209,7 +211,7 @@ Everyone else is stupid.`
         </Box>
       </Box>
       <Text 
-        fontSize={{ base: "13px", md: "2xl" }} 
+        fontSize={{ base: "13px", md: "xl" }} 
         color="gray.600" 
         _dark={{ color: 'gray.300' }} 
         maxW="10xl"
@@ -218,6 +220,31 @@ Everyone else is stupid.`
         px={{ base: 0, md: 0 }}
       >
         {bioText}
+      </Text>
+      
+      {/* Slot Machine Text */}
+      <VStack spacing={1} width="100%">
+        <SlotMachineText 
+          firstWords={firstWords}
+          lastWords={lastWords}
+          staticText="keeps me"
+          interval={3000}
+          fontSize={{ base: "13px", md: "xl" }}
+          color="gray.600"
+          darkModeColor="gray.300"
+        />
+      </VStack>
+      
+      <Text 
+        fontSize={{ base: "13px", md: "xl" }} 
+        color="gray.600" 
+        _dark={{ color: 'gray.300' }} 
+        maxW="10xl"
+        whiteSpace="pre-line"
+        textAlign="center"
+        px={{ base: 0, md: 0 }}
+      >
+        {additionalText}
       </Text>
       
       {/* Icons */}
