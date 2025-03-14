@@ -135,10 +135,7 @@ Completed military service`;
   const firstWords = ["Metacognition", "Underdogma", "Hipsterism", "Curiosity", "Pessimism"];
   const lastWords = ["alive", "running", "proud", "dreaming", "objective"];
 
-  const additionalText = `
-Find me at the peak of "Mount Stupid".
-
-Everyone else is stupid.`;
+  const additionalText = `Find me at the peak of "Mount Stupid".`;
 
   // links
   const socialLinks = [
