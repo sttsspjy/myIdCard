@@ -1,11 +1,11 @@
-import { Heading, Text, Button, VStack, HStack, Link as ChakraLink, useBreakpointValue, Box } from '@chakra-ui/react'
+import { Heading, Button, VStack, HStack, Link as ChakraLink, useBreakpointValue, Box } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { FaFacebook, FaGithub, FaSteam } from 'react-icons/fa'
 import { motion, useAnimation } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import SlotMachineText from '../components/SlotMachineText'
+import TypewriterBio from '../components/TypewriterBio'
 
-const Home = () => {
+const Home = ({ isNameClicked = false }) => {
   // State to track hover
   const [isHovered, setIsHovered] = useState(false);
   const controls = useAnimation();
@@ -120,7 +120,6 @@ const Home = () => {
   // Split the text by periods and format with line breaks
   const bioText = `Guy. 2000-born in Seoul. 
   INTJ
-  Pessimistic
 I can speak English.
 
 Seoul Gaewon Elemantary School
@@ -207,45 +206,25 @@ Completed military service`;
           </Heading>
         </Box>
       </Box>
-      <Text 
-        fontSize={{ base: "13px", md: "xl" }} 
-        color="gray.600" 
-        _dark={{ color: 'gray.300' }} 
-        maxW="10xl"
-        whiteSpace="pre-line"
-        textAlign="center"
-        px={{ base: 0, md: 0 }}
+      
+      {/* TypewriterBio component */}
+      <TypewriterBio
+        bioText={bioText}
+        additionalText={additionalText}
+        firstWords={firstWords}
+        lastWords={lastWords}
+        typingSpeed={30}
+        isActive={isNameClicked}
+      />
+      
+      {/* Icons - only show when bio is active */}
+      <HStack 
+        spacing={6} 
+        pt={2}
+        opacity={isNameClicked ? 1 : 0}
+        transition="opacity 0.5s ease-in"
+        transitionDelay="2s"
       >
-        {bioText}
-      </Text>
-      
-      {/* Slot Machine Text */}
-      <VStack spacing={1} width="100%">
-        <SlotMachineText 
-          firstWords={firstWords}
-          lastWords={lastWords}
-          staticText="keeps me"
-          interval={3000}
-          fontSize={{ base: "13px", md: "xl" }}
-          color="gray.600"
-          darkModeColor="gray.300"
-        />
-      </VStack>
-      
-      <Text 
-        fontSize={{ base: "13px", md: "xl" }} 
-        color="gray.600" 
-        _dark={{ color: 'gray.300' }} 
-        maxW="10xl"
-        whiteSpace="pre-line"
-        textAlign="center"
-        px={{ base: 0, md: 0 }}
-      >
-        {additionalText}
-      </Text>
-      
-      {/* Icons */}
-      <HStack spacing={6} pt={2}>
         {socialLinks.map((social) => {
           const IconComponent = social.icon;
           return (
@@ -271,13 +250,16 @@ Completed military service`;
         })}
       </HStack>
       
-      {/* Borderless button that looks like text */}
+      {/* Borderless button that looks like text - only show when bio is active */}
       <Link to="/about">
         <Button
           variant="link"
           colorScheme="blue"
           fontSize={{ base: "md", md: "xl" }}
           fontWeight="normal"
+          opacity={isNameClicked ? 1 : 0}
+          transition="opacity 0.5s ease-in"
+          transitionDelay="2.5s"
           _hover={{
             textDecoration: "underline"
           }}

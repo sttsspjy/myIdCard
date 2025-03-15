@@ -1,14 +1,15 @@
 import { ChakraProvider, Box, extendTheme, ColorModeScript } from '@chakra-ui/react'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { useState, useCallback } from 'react'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import About from './pages/About'
-import TypewriterText from './components/TypewriterText'
+import GradientTypewriter from './components/GradientTypewriter'
 
 const theme = extendTheme({
   config: {
     initialColorMode: 'light',
-    useSystemColorMode: false,
+    useSystemColorMode: true,
   },
   fonts: {
     heading: '"Roboto", sans-serif',
@@ -31,6 +32,19 @@ const theme = extendTheme({
 })
 
 function App() {
+  const [isNameClicked, setIsNameClicked] = useState(false);
+  
+  // Calculate an appropriate fill duration based on the bio text length
+  // Assuming average bio text length and typing speed of 30ms per character
+  const bioTextLength = 300; // Approximate length of bio text
+  const typingSpeed = 30; // Milliseconds per character for bio typing
+  const estimatedBioTypingTime = (bioTextLength * typingSpeed) / 1000; // Convert to seconds
+  
+  // Use useCallback to prevent unnecessary re-renders
+  const handleNameClick = useCallback(() => {
+    setIsNameClicked(true);
+  }, []);
+  
   return (
     <>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
@@ -43,13 +57,17 @@ function App() {
                 <Box py={8} px={4} width="100%" display="flex" flexDirection="column" alignItems="center">
                   {/* Heading outside the white container */}
                   <Box width="100%" textAlign="center" mb={16}>
-                    <TypewriterText 
+                    <GradientTypewriter 
                       text="Jaeyoung Park" 
                       typingSpeed={150}
                       fontSize={{ base: "40px", md: "100px" }}
                       fontWeight="bold"
-                      color="gray.800"
-                      darkModeColor="gray.100"
+                      initialColor="gray.800"
+                      darkModeInitialColor="gray.100"
+                      gradientColors={["#FFD700", "#FF8C00", "#9932CC"]} // yellow-orange-purple
+                      onClick={handleNameClick}
+                      showHint={!isNameClicked}
+                      fillDuration={estimatedBioTypingTime} // Match the bio typing duration
                     />
                   </Box>
                   
@@ -65,7 +83,7 @@ function App() {
                     shadow="md"
                     mt={4}
                   >
-                    <Home/>
+                    <Home isNameClicked={isNameClicked} />
                   </Box>
                 </Box>
               } />

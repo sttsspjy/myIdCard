@@ -2,7 +2,6 @@ import { Box, Flex, Link as ChakraLink, Spacer, IconButton, useBreakpointValue }
 import { useColorMode } from '@chakra-ui/color-mode'
 import { Link as RouterLink } from 'react-router-dom'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
-import { motion, useAnimation } from 'framer-motion'
 import { useState, useEffect } from 'react'
 
 const Navbar = () => {
@@ -10,79 +9,30 @@ const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode()
   const musicLink = 'https://www.youtube.com/watch?v=mRsUPoFtUtA'
   
-  // State to track hover
-  const [isHovered, setIsHovered] = useState(false);
-  const controls = useAnimation();
-
-  // Responsive animation values
-  const niceHiddenX = useBreakpointValue({ base: -20, md: -30, lg: -40 }) || -30;
-  const niceVisibleX = useBreakpointValue({ base: 10, md: 15, lg: 20 }) || 15;
+  // State for typing animation
+  const [displayText, setDisplayText] = useState('');
+  const fullText = "Nice to meet you.";
+  const typingSpeed = 100; // ms per character
   
-  // Create animation variants with responsive values and initial default values
-  const [variants, setVariants] = useState({
-    niceVariants: {
-      hidden: { 
-        x: -30, 
-        opacity: 0,
-        transition: {
-          type: "spring",
-          stiffness: 200,
-          damping: 20
-        }
-      },
-      visible: { 
-        x: 15, 
-        opacity: 1,
-        transition: { 
-          type: "spring", 
-          stiffness: 200,
-          damping: 20
-        }
-      }
-    }
-  });
-  
-  // Update variants when breakpoint values change
+  // Start typing animation when component mounts
   useEffect(() => {
-    setVariants({
-      niceVariants: {
-        hidden: { 
-          x: niceHiddenX, 
-          opacity: 0,
-          transition: {
-            type: "spring",
-            stiffness: 200,
-            damping: 20
-          }
-        },
-        visible: { 
-          x: niceVisibleX, 
-          opacity: 1,
-          transition: { 
-            type: "spring", 
-            stiffness: 200,
-            damping: 20
-          }
+    let currentIndex = 0;
+    // Add a small delay before starting the typing animation
+    const initialDelay = setTimeout(() => {
+      const typingInterval = setInterval(() => {
+        if (currentIndex < fullText.length) {
+          setDisplayText(fullText.substring(0, currentIndex + 1));
+          currentIndex++;
+        } else {
+          clearInterval(typingInterval);
         }
-      }
-    });
-  }, [niceHiddenX, niceVisibleX]);
-
-  // Ensure animation starts in hidden state
-  useEffect(() => {
-    controls.start("hidden");
-  }, [controls]);
-
-  // Handle hover events
-  const handleHoverStart = () => {
-    setIsHovered(true);
-    controls.start("visible");
-  };
-
-  const handleHoverEnd = () => {
-    setIsHovered(false);
-    controls.start("hidden");
-  };
+      }, typingSpeed);
+      
+      return () => clearInterval(typingInterval);
+    }, 1000); // 1 second delay before typing starts
+    
+    return () => clearTimeout(initialDelay);
+  }, []);
   
   return (
     <Box bg="white" _dark={{ bg: 'gray.900' }} px={4} shadow="sm">
@@ -90,10 +40,7 @@ const Navbar = () => {
         <Box 
           display="flex"
           alignItems="center"
-          cursor="pointer"
           position="relative"
-          onMouseEnter={handleHoverStart}
-          onMouseLeave={handleHoverEnd}
         >
           <ChakraLink 
             href={musicLink} 
@@ -108,21 +55,16 @@ const Navbar = () => {
             Hi.
           </ChakraLink>
           <Box
-            as={motion.div}
-            animate={controls}
-            variants={variants.niceVariants}
-            initial="hidden"
             fontSize={{ base: "xl", md: "2xl" }}
             fontWeight="bold"
             color="gray.800"
-            _dark={{ color: 'gray.300' }}
+            _dark={{ color: 'gray.100' }}
             position="absolute"
             left="100%"
             whiteSpace="nowrap"
-            opacity={isHovered ? 1 : 0}
             ml={1}
           >
-            Nice to meet you.
+            {displayText}
           </Box>
         </Box>
         <Spacer />
