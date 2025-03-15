@@ -118,12 +118,14 @@ const Home = ({ isNameClicked = false }) => {
   };
 
   // Split the text by periods and format with line breaks
-  const bioText = `Guy. 2000-born in Seoul. 
+  const bioText = `Guy. 2000-born in Seoul.
+  182cm Hunchback
+  Atheist
   INTJ
 I can speak English.
 
 Seoul Gaewon Elemantary School
-Seri Insan Borneo International School
+Seri Insan Borneo School
 Sabah Tshung Tsin Secondary School
 Sayfol International School
 IGCSE O & A-level examinee

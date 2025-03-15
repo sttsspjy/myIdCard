@@ -2,9 +2,7 @@ import { VStack, Heading, Text } from '@chakra-ui/react'
 
 const About = () => {
     // Split the text by periods and format with line breaks
-    const shoutOuts = `Family.
-    God if there is any.
-    Unimelb people. Sayfol friends. Malaysian friends.
+    const shoutOuts = `Friends and family.
     React, Chakra UI, Cursor.`
   return (
     <VStack gap={8} alignItems="flex-start">
