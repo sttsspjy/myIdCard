@@ -64,7 +64,7 @@ function App() {
                       fontWeight="bold"
                       initialColor="gray.800"
                       darkModeInitialColor="gray.100"
-                      gradientColors={["#FFD700", "#FF8C00", "#9932CC"]} // yellow-orange-purple
+                      gradientColors={["#FFF7B3", "#FFE4E1", "#B3E5FC", "#E1BEE7"]} // light yellow-light pink-light skyblue-light purple
                       onClick={handleNameClick}
                       showHint={!isNameClicked}
                       fillDuration={estimatedBioTypingTime} // Match the bio typing duration

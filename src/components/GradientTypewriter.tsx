@@ -22,9 +22,9 @@ const GradientTypewriter = ({
   fontSize = { base: "40px", md: "100px" },
   fontWeight = "bold",
   initialColor = "gray.800",
-  gradientColors = ["#FFD700", "#FF8C00", "#9932CC"], // yellow-orange-purple
+  gradientColors = ["#FFF7B3", "#FFE4E1", "#B3E5FC", "#E1BEE7"], // light yellow-light pink-light skyblue-light purple
   darkModeInitialColor = "gray.100",
-  darkModegradientColors = ["#FFD700", "#FF8C00", "#9932CC"], // same for dark mode
+  darkModegradientColors = ["#FFF7B3", "#FFE4E1", "#B3E5FC", "#E1BEE7"], // same for dark mode
   onClick,
   showHint = true,
   fillDuration = 8 // Default to 8 seconds for the fill animation
