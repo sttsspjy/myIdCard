@@ -102,14 +102,14 @@ const GradientTypewriter = ({
     glowControls.start({
       textShadow: [
         isDarkMode 
-          ? "0 0 5px rgba(255,255,255,0.3)" 
-          : "0 0 5px rgba(0,0,0,0.3)",
+          ? "0 0 5px rgba(255,255,255,0.2)" 
+          : "none",
         isDarkMode 
-          ? "0 0 10px rgba(255,255,255,0.5)" 
-          : "0 0 10px rgba(0,0,0,0.5)",
+          ? "0 0 8px rgba(255,255,255,0.3)" 
+          : "none",
         isDarkMode 
-          ? "0 0 5px rgba(255,255,255,0.3)" 
-          : "0 0 5px rgba(0,0,0,0.3)",
+          ? "0 0 5px rgba(255,255,255,0.2)" 
+          : "none",
       ],
       transition: {
         duration: 2,
@@ -125,8 +125,8 @@ const GradientTypewriter = ({
       setIsHovered(true);
       glowControls.start({
         textShadow: isDarkMode 
-          ? "0 0 15px rgba(255,255,255,0.7)" 
-          : "0 0 15px rgba(0,0,0,0.7)",
+          ? "0 0 15px rgba(255,255,255,0.5)" 
+          : "none",
         transition: { duration: 0.3 }
       });
     }
@@ -219,6 +219,12 @@ const GradientTypewriter = ({
           whiteSpace="nowrap"
           userSelect="none"
           animate={glowControls}
+          sx={{
+            WebkitFontSmoothing: 'antialiased',
+            MozOsxFontSmoothing: 'grayscale',
+            textRendering: 'optimizeLegibility',
+            textShadow: isDarkMode ? 'none' : '0 0 1px #18181b'
+          }}
         >
           {displayText}
         </Box>
@@ -249,6 +255,11 @@ const GradientTypewriter = ({
               bgClip="text"
               whiteSpace="nowrap"
               userSelect="none"
+              sx={{
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
+                textRendering: 'optimizeLegibility'
+              }}
             >
               {text}
             </Box>

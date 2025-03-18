@@ -1,5 +1,4 @@
-import { Heading, Button, VStack, HStack, Link as ChakraLink, useBreakpointValue, Box } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Heading, VStack, HStack, Link as ChakraLink, useBreakpointValue, Box } from '@chakra-ui/react'
 import { FaFacebook, FaGithub, FaSteam } from 'react-icons/fa'
 import { motion, useAnimation } from 'framer-motion'
 import { useState, useEffect } from 'react'
@@ -163,7 +162,7 @@ Completed military service`;
   };
 
   return (
-    <VStack gap={12} alignItems="center" textAlign="center" w="100%">
+    <VStack gap={8} alignItems="center" textAlign="center" w="100%" pt={2} pb={4} px={0}>
       <Box 
         as={motion.div}
         variants={containerVariants}
@@ -221,8 +220,9 @@ Completed military service`;
       
       {/* Icons - only show when bio is active */}
       <HStack 
-        spacing={6} 
-        pt={2}
+        spacing={5} 
+        pt={0}
+        mb={0}
         opacity={isNameClicked ? 1 : 0}
         transition="opacity 0.5s ease-in"
         transitionDelay="2s"
@@ -251,24 +251,6 @@ Completed military service`;
           );
         })}
       </HStack>
-      
-      {/* Borderless button that looks like text - only show when bio is active */}
-      <Link to="/about">
-        <Button
-          variant="link"
-          colorScheme="blue"
-          fontSize={{ base: "md", md: "xl" }}
-          fontWeight="normal"
-          opacity={isNameClicked ? 1 : 0}
-          transition="opacity 0.5s ease-in"
-          transitionDelay="2.5s"
-          _hover={{
-            textDecoration: "underline"
-          }}
-        >
-          Extras
-        </Button>
-      </Link>
     </VStack>
   )
 }

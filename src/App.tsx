@@ -3,13 +3,14 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import { useState, useCallback } from 'react'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
-import About from './pages/About'
+import CardFlip from './components/CardFlip'
+import CardBack from './components/CardBack'
 import GradientTypewriter from './components/GradientTypewriter'
 
 const theme = extendTheme({
   config: {
-    initialColorMode: 'light',
-    useSystemColorMode: true,
+    initialColorMode: 'dark',
+    useSystemColorMode: false,
   },
   fonts: {
     heading: '"Roboto", sans-serif',
@@ -45,6 +46,10 @@ function App() {
     setIsNameClicked(true);
   }, []);
   
+  // Shoutouts text for card back
+  const shoutOuts = `Friends and family.
+  React, Chakra UI, Cursor.`;
+  
   return (
     <>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
@@ -62,8 +67,8 @@ function App() {
                       typingSpeed={150}
                       fontSize={{ base: "40px", md: "100px" }}
                       fontWeight="bold"
-                      initialColor="gray.800"
-                      darkModeInitialColor="gray.100"
+                      initialColor="#27272a"
+                      darkModeInitialColor="#f4f4f5"
                       gradientColors={["#FFF7B3", "#FFE4E1", "#B3E5FC", "#E1BEE7"]} // light yellow-light pink-light skyblue-light purple
                       onClick={handleNameClick}
                       showHint={!isNameClicked}
@@ -71,36 +76,17 @@ function App() {
                     />
                   </Box>
                   
-                  {/* White container with the rest of the content */}
+                  {/* Content container */}
                   <Box
                     maxW="container.lg"
-                    w="100%"
-                    bg="white"
-                    color="gray.800"
-                    _dark={{ bg: 'gray.800', color: 'white' }}
-                    borderRadius="xl"
-                    p={12}
-                    shadow="md"
-                    mt={4}
+                    mx="auto"
+                    position="relative"
                   >
-                    <Home isNameClicked={isNameClicked} />
-                  </Box>
-                </Box>
-              } />
-              <Route path="/about" element={
-                <Box py={8} px={4} width="100%" display="flex" justifyContent="center">
-                  <Box
-                    maxW="container.lg"
-                    w="100%"
-                    bg="white"
-                    color="gray.800"
-                    _dark={{ bg: 'gray.800', color: 'white' }}
-                    borderRadius="xl"
-                    p={8}
-                    shadow="md"
-                    mt={4}
-                  >
-                    <About />
+                    <CardFlip 
+                      frontContent={<Home isNameClicked={isNameClicked} />}
+                      backContent={<CardBack shoutOuts={shoutOuts} />}
+                      gradientColors={["#FFF7B3", "#FFE4E1", "#B3E5FC", "#E1BEE7"]}
+                    />
                   </Box>
                 </Box>
               } />
