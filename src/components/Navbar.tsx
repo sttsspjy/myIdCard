@@ -1,6 +1,5 @@
 import { Box, Flex, Link as ChakraLink, Spacer, IconButton, useBreakpointValue } from '@chakra-ui/react'
 import { useColorMode } from '@chakra-ui/color-mode'
-import { Link as RouterLink } from 'react-router-dom'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { useState, useEffect } from 'react'
 
@@ -68,12 +67,7 @@ const Navbar = () => {
           </Box>
         </Box>
         <Spacer />
-        <Flex gap={8} alignItems="center">
-          <RouterLink to="/">
-            <ChakraLink color="gray.600" _dark={{ color: 'gray.300' }} _hover={{ color: 'black' }}>
-              Home
-            </ChakraLink>
-          </RouterLink>
+        <Flex alignItems="center">
           <IconButton
             aria-label="Toggle dark mode"
             as={colorMode === 'dark' ? SunIcon : MoonIcon}

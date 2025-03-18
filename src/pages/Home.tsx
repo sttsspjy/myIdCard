@@ -143,7 +143,7 @@ Completed military service`;
     { name: 'GitHub', url: 'https://github.com/sttsspjy', icon: FaGithub },
     { name: 'Steam', url: 'https://steamcommunity.com/profiles/76561198254379003', icon: FaSteam }
   ]
-  const iconSize = useBreakpointValue({ base: 20, md: 24 });
+  const iconSize = useBreakpointValue({ base: 28, md: 40 });
 
   // Animation variants for container
   const containerVariants = {
@@ -234,7 +234,6 @@ Completed military service`;
               key={social.name}
               href={social.url} 
               isExternal
-              p={{ base: 2, md: 3 }}
               borderRadius="full"
               bg="gray.100"
               color="gray.600"
