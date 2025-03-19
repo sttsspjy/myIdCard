@@ -57,15 +57,13 @@ Completed military service`;
         additionalText={additionalText}
         firstWords={firstWords}
         lastWords={lastWords}
-        typingSpeed={30}
+        typingSpeed={40}
         isActive={isNameClicked}
       />
       
       {/* Icons - only show when bio is active */}
       <HStack 
         spacing={5} 
-        pt={0}
-        mb={0}
         opacity={isNameClicked ? 1 : 0}
         transition="opacity 0.5s ease-in"
         transitionDelay="2s"

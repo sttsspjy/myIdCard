@@ -36,7 +36,7 @@ function App() {
   const [isNameClicked, setIsNameClicked] = useState(false);
   
   const bioTextLength = 300; // Approximate length of bio text
-  const typingSpeed = 30; // Milliseconds per character for bio typing
+  const typingSpeed = 45; // Milliseconds per character for bio typing (increased from 30)
   const estimatedBioTypingTime = (bioTextLength * typingSpeed) / 1000; // Convert to seconds
   
   // Use useCallback to prevent unnecessary re-renders

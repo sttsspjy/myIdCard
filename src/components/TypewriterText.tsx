@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Box, useBreakpointValue } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { Box } from '@chakra-ui/react';
 
 interface TypewriterTextProps {
   text: string;
-  typingSpeed?: number;
-  cursorBlinkSpeed?: number;
   fontSize?: any;
   fontWeight?: string;
   color?: string;
@@ -14,7 +11,6 @@ interface TypewriterTextProps {
 
 const TypewriterText = ({
   text,
-  typingSpeed = 150,
   fontSize = { base: "40px", md: "100px" },
   fontWeight = "bold",
   color = "gray.800",
@@ -34,14 +30,10 @@ const TypewriterText = ({
         clearInterval(typingInterval);
         setIsTypingComplete(true);
       }
-    }, typingSpeed);
+    }, 1000);
 
     return () => clearInterval(typingInterval);
-  }, [text, typingSpeed]);
-
-  // Responsive cursor size
-  const cursorHeight = useBreakpointValue({ base: "40px", md: "80px" }) || "40px";
-  const cursorWidth = useBreakpointValue({ base: "3px", md: "5px" }) || "3px";
+  }, [text]);
 
   return (
     <Box 
@@ -63,18 +55,6 @@ const TypewriterText = ({
         whiteSpace="nowrap"
       >
         {displayText}
-        <Box
-          as={motion.span}
-          display="inline-block"
-          height={cursorHeight}
-          width={cursorWidth}
-          bg={color}
-          _dark={{ bg: darkModeColor }}
-          ml="2px"
-          position="relative"
-          top="10px"
-          transition={{ duration: 0.1 } as any}
-        />
       </Box>
     </Box>
   );
