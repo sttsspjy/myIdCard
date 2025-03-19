@@ -40,7 +40,6 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
       px={7}
       py={5}
       mt={4}
-      mb={0}
       fontSize="md"
       fontWeight="bold"
       color="#27272a"

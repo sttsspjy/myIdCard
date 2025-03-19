@@ -15,14 +15,12 @@ interface TypewriterTextProps {
 const TypewriterText = ({
   text,
   typingSpeed = 150,
-  cursorBlinkSpeed = 500,
   fontSize = { base: "40px", md: "100px" },
   fontWeight = "bold",
   color = "gray.800",
   darkModeColor = "gray.100"
 }: TypewriterTextProps) => {
   const [displayText, setDisplayText] = useState('');
-  const [showCursor, setShowCursor] = useState(true);
   const [, setIsTypingComplete] = useState(false);
 
   // Start typing animation when component mounts
@@ -40,15 +38,6 @@ const TypewriterText = ({
 
     return () => clearInterval(typingInterval);
   }, [text, typingSpeed]);
-
-  // Blink cursor
-  useEffect(() => {
-    const cursorInterval = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, cursorBlinkSpeed);
-
-    return () => clearInterval(cursorInterval);
-  }, [cursorBlinkSpeed]);
 
   // Responsive cursor size
   const cursorHeight = useBreakpointValue({ base: "40px", md: "80px" }) || "40px";
@@ -84,7 +73,6 @@ const TypewriterText = ({
           ml="2px"
           position="relative"
           top="10px"
-          animate={{ opacity: showCursor ? 1 : 0 }}
           transition={{ duration: 0.1 } as any}
         />
       </Box>
