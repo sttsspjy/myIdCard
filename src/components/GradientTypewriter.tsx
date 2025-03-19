@@ -10,7 +10,6 @@ interface GradientTypewriterProps {
   initialColor?: string;
   gradientColors?: string[];
   darkModeInitialColor?: string;
-  darkModegradientColors?: string[];
   onClick?: () => void;
   showHint?: boolean;
   fillDuration?: number;
@@ -24,7 +23,6 @@ const GradientTypewriter = ({
   initialColor = "gray.800",
   gradientColors = ["#FFF7B3", "#FFE4E1", "#B3E5FC", "#E1BEE7"], // light yellow-light pink-light skyblue-light purple
   darkModeInitialColor = "gray.100",
-  darkModegradientColors = ["#FFF7B3", "#FFE4E1", "#B3E5FC", "#E1BEE7"], // same for dark mode
   onClick,
   showHint = true,
   fillDuration = 8 // Default to 8 seconds for the fill animation
@@ -34,7 +32,6 @@ const GradientTypewriter = ({
   const [isGradientAnimating, setIsGradientAnimating] = useState(false);
   const [, setIsFlowing] = useState(false);
   const [showTapHint, setShowTapHint] = useState(showHint);
-  const [, setIsHovered] = useState(false);
   const controls = useAnimation();
   const flowControls = useAnimation();
   const hintControls = useAnimation();
@@ -48,18 +45,6 @@ const GradientTypewriter = ({
     // Skip typing if it's already been done
     if (hasTypedRef.current) {
       setIsTypingComplete(true);
-      if (showHint) {
-        // Make hint text more visible with stronger animation
-        hintControls.start({
-          opacity: [0.7, 1],
-          scale: [1, 1.05, 1],
-          transition: {
-            duration: 2,
-            repeat: Infinity,
-            repeatType: "reverse"
-          }
-        });
-      }
       return;
     }
 
@@ -100,17 +85,6 @@ const GradientTypewriter = ({
   // Start the glow animation
   const startGlowAnimation = () => {
     glowControls.start({
-      textShadow: [
-        isDarkMode 
-          ? "0 0 5px rgba(255,255,255,0.2)" 
-          : "none",
-        isDarkMode 
-          ? "0 0 8px rgba(255,255,255,0.3)" 
-          : "none",
-        isDarkMode 
-          ? "0 0 5px rgba(255,255,255,0.2)" 
-          : "none",
-      ],
       transition: {
         duration: 2,
         repeat: Infinity,
@@ -120,24 +94,7 @@ const GradientTypewriter = ({
   };
 
   // Handle hover state
-  const handleHoverStart = () => {
-    if (isTypingComplete && !isGradientAnimating) {
-      setIsHovered(true);
-      glowControls.start({
-        textShadow: isDarkMode 
-          ? "0 0 15px rgba(255,255,255,0.5)" 
-          : "none",
-        transition: { duration: 0.3 }
-      });
-    }
-  };
 
-  const handleHoverEnd = () => {
-    if (isTypingComplete && !isGradientAnimating) {
-      setIsHovered(false);
-      startGlowAnimation();
-    }
-  };
 
   // Handle click to start gradient animation
   const handleClick = () => {
@@ -200,8 +157,6 @@ const GradientTypewriter = ({
     >
       <Box
         onClick={handleClick}
-        onMouseEnter={handleHoverStart}
-        onMouseLeave={handleHoverEnd}
         cursor={isTypingComplete ? "pointer" : "default"}
         ref={textRef}
         position="relative"
@@ -220,8 +175,6 @@ const GradientTypewriter = ({
             WebkitFontSmoothing: 'antialiased',
             MozOsxFontSmoothing: 'grayscale',
             textRendering: 'optimizeLegibility',
-            textShadow: isDarkMode ? '0 0 1px #f4f4f5' : '0 0 1px #18181b',
-            WebkitTextStroke: isDarkMode ? '1px rgba(244, 244, 245, 0.2)' : '1px rgba(39, 39, 42, 0.3)'
           }}
         >
           {displayText}
@@ -247,7 +200,7 @@ const GradientTypewriter = ({
               as={motion.span}
               fontSize={fontSize}
               fontWeight={fontWeight}
-              background={getExtendedGradient(isDarkMode ? darkModegradientColors : gradientColors)}
+              background={getExtendedGradient(gradientColors)}
               backgroundSize="200% 100%"
               animate={flowControls}
               bgClip="text"

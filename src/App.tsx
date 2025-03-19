@@ -35,8 +35,6 @@ const theme = extendTheme({
 function App() {
   const [isNameClicked, setIsNameClicked] = useState(false);
   
-  // Calculate an appropriate fill duration based on the bio text length
-  // Assuming average bio text length and typing speed of 30ms per character
   const bioTextLength = 300; // Approximate length of bio text
   const typingSpeed = 30; // Milliseconds per character for bio typing
   const estimatedBioTypingTime = (bioTextLength * typingSpeed) / 1000; // Convert to seconds
