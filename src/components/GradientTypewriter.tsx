@@ -157,7 +157,7 @@ const GradientTypewriter = ({
       
       // First animation: fill from left to right (much slower now)
       controls.start({
-        clipPath: "inset(0 0 0 0)",
+        clipPath: "inset(0 -10% 0 0)", // Extend beyond the right edge
         transition: { 
           duration: fillDuration, 
           ease: "linear" // Changed to linear for a more consistent progress bar feel
@@ -186,9 +186,6 @@ const GradientTypewriter = ({
     const extendedColors = [...colors, ...colors];
     return `linear-gradient(to right, ${extendedColors.join(', ')})`;
   };
-
-  // Responsive font size
-  //const responsiveFontSize = useBreakpointValue(typeof fontSize === 'object' ? fontSize : { base: fontSize }) || fontSize;
 
   return (
     <Box 
@@ -223,7 +220,8 @@ const GradientTypewriter = ({
             WebkitFontSmoothing: 'antialiased',
             MozOsxFontSmoothing: 'grayscale',
             textRendering: 'optimizeLegibility',
-            textShadow: isDarkMode ? 'none' : '0 0 1px #18181b'
+            textShadow: isDarkMode ? '0 0 1px #f4f4f5' : '0 0 1px #18181b',
+            WebkitTextStroke: isDarkMode ? '1px rgba(244, 244, 245, 0.2)' : '1px rgba(39, 39, 42, 0.3)'
           }}
         >
           {displayText}
@@ -241,7 +239,7 @@ const GradientTypewriter = ({
             display="flex"
             justifyContent="center"
             alignItems="center"
-            initial={{ clipPath: "inset(0 100% 0 0)" }}
+            initial={{ clipPath: "inset(0 110% 0 0)" }} // Start completely hidden with extra margin
             animate={controls}
             pointerEvents="none"
           >
@@ -258,7 +256,8 @@ const GradientTypewriter = ({
               sx={{
                 WebkitFontSmoothing: 'antialiased',
                 MozOsxFontSmoothing: 'grayscale',
-                textRendering: 'optimizeLegibility'
+                textRendering: 'optimizeLegibility',
+                WebkitTextStroke: '1px rgba(39, 39, 42, 0)'
               }}
             >
               {text}
