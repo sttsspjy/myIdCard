@@ -35,7 +35,7 @@ const theme = extendTheme({
   styles: {
     global: {
       body: {
-        overflow: 'hidden', // Prevent scrollbar issues with particles
+        overflowX: 'hidden'
       }
     }
   }
