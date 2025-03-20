@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Text, useColorMode } from '@chakra-ui/react';
 import { motion, useAnimation } from 'framer-motion';
 
 interface GradientTypewriterProps {
@@ -8,24 +8,28 @@ interface GradientTypewriterProps {
   fontSize?: any;
   fontWeight?: string;
   initialColor?: string;
-  gradientColors?: string[];
   darkModeInitialColor?: string;
+  gradientColors?: string[];
+  darkGradientColors?: string[];
   onClick?: () => void;
   showHint?: boolean;
   fillDuration?: number;
+  flowDuration?: number;
 }
 
 const GradientTypewriter = ({
   text,
-  typingSpeed = 150,
-  fontSize = { base: "40px", md: "100px" },
-  fontWeight = "bold",
-  initialColor = "gray.800",
-  gradientColors = ["#FFF7B3", "#FFE4E1", "#B3E5FC", "#E1BEE7"], // light yellow-light pink-light skyblue-light purple
-  darkModeInitialColor = "gray.100",
+  typingSpeed,
+  fontSize,
+  fontWeight,
+  initialColor,
+  darkModeInitialColor,
+  gradientColors,
+  darkGradientColors,
   onClick,
-  showHint = true,
-  fillDuration = 8 // Default to 8 seconds for the fill animation
+  showHint,
+  fillDuration, 
+  flowDuration
 }: GradientTypewriterProps) => {
   const [displayText, setDisplayText] = useState(text); // Initialize with full text to prevent retyping
   const [isTypingComplete, setIsTypingComplete] = useState(false);
@@ -37,8 +41,14 @@ const GradientTypewriter = ({
   const hintControls = useAnimation();
   const glowControls = useAnimation();
   const textRef = useRef<HTMLDivElement>(null);
-  const isDarkMode = document.documentElement.classList.contains('chakra-ui-dark');
+  const { colorMode } = useColorMode();
+  const isDarkMode = colorMode === 'dark';
   const hasTypedRef = useRef(false); // Ref to track if typing has occurred
+
+  // Get the appropriate gradient colors based on the current theme
+  const activeGradientColors = isDarkMode && darkGradientColors ? 
+                              darkGradientColors : 
+                              gradientColors;
 
   // Start typing animation when component mounts, but only once
   useEffect(() => {
@@ -106,15 +116,14 @@ const GradientTypewriter = ({
       // Hide the hint
       hintControls.start({
         opacity: 0,
-        transition: { duration: 0.5 }
       });
       
-      // First animation: fill from left to right (much slower now)
+      // fill from left to right
       controls.start({
         clipPath: "inset(0 0 0 0)",
         transition: { 
           duration: fillDuration, 
-          ease: "linear" // Changed to linear for a more consistent progress bar feel
+          ease: "linear"
         }
       }).then(() => {
         // After fill-up is complete, start the flowing animation
@@ -122,7 +131,7 @@ const GradientTypewriter = ({
         flowControls.start({
           backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
           transition: {
-            duration: 15,
+            duration: flowDuration,
             ease: "linear",
             repeat: Infinity,
             repeatType: "loop"
@@ -134,9 +143,7 @@ const GradientTypewriter = ({
     }
   };
 
-  // Prepare gradient colors with extra repetition for smoother flow
-  const getExtendedGradient = (colors: string[]) => {
-    // Repeat the colors to create a seamless flow
+  const getExtendedGradient = (colors: string[] = []) => {
     const extendedColors = [...colors, ...colors];
     return `linear-gradient(to right, ${extendedColors.join(', ')})`;
   };
@@ -189,7 +196,7 @@ const GradientTypewriter = ({
             display="flex"
             justifyContent="center"
             alignItems="center"
-            initial={{ clipPath: "inset(0 110% 0 0)" }} // Start completely hidden with extra margin
+            initial={{ clipPath: "inset(0 100% 0 0)" }} // Start completely hidden with extra margin
             animate={controls}
             pointerEvents="none"
           >
@@ -197,7 +204,7 @@ const GradientTypewriter = ({
               as={motion.span}
               fontSize={fontSize}
               fontWeight={fontWeight}
-              background={getExtendedGradient(gradientColors)}
+              background={getExtendedGradient(activeGradientColors)}
               backgroundSize="200% 100%"
               animate={flowControls}
               bgClip="text"

@@ -101,12 +101,24 @@ function App() {
                       typingSpeed={150}
                       fontSize={{ base: "40px", md: "100px" }}
                       fontWeight="bold"
-                      initialColor="#27272a" // Keeping dark text in light mode
-                      darkModeInitialColor="#f4f4f5" // Light text in dark mode
-                      gradientColors={["#FFF7B3", "#FFE4E1", "#B3E5FC", "#E1BEE7"]}
+                      initialColor="gray.300"
+                      darkModeInitialColor="gray.500"
+                      gradientColors={[
+                        "#F9E79F", // darker yellow
+                        "#F5B7B1", // darker pink
+                        "#85C1E9", // darker skyblue
+                        "#C39BD3"  // darker purple
+                      ]}
+                      darkGradientColors={[
+                        "#FFF7B3", // light yellow
+                        "#FFE4E1", // light pink
+                        "#B3E5FC", // light skyblue
+                        "#E1BEE7"  // light purple
+                      ]}
                       onClick={handleNameClick}
                       showHint={!isNameClicked}
                       fillDuration={estimatedBioTypingTime}
+                      flowDuration={15}
                     />
                   </Box>
                   
