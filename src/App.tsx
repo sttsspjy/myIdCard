@@ -7,6 +7,7 @@ import CardFlip from './components/CardFlip'
 import CardBack from './components/CardBack'
 import GradientTypewriter from './components/GradientTypewriter'
 import ParticleBackground from './components/ParticleBackground'
+import './App.css'
 
 const theme = extendTheme({
   config: {
@@ -68,13 +69,12 @@ function App() {
           <Box 
             minH="100vh" 
             width="100%" 
-            position="relative" 
-            zIndex="1"
-            bg="transparent" // Changed to transparent to show particles
+            className="content-layer"
+            bg="transparent"
             _dark={{ bg: 'transparent' }}
           >
             {/* Navbar with higher z-index */}
-            <Box position="relative" zIndex="10">
+            <Box className="navbar-layer">
               <Navbar />
             </Box>
             
@@ -87,16 +87,14 @@ function App() {
                   display="flex" 
                   flexDirection="column" 
                   alignItems="center"
-                  position="relative"
-                  zIndex="2" // Above particles
+                  className="main-content"
                 >
                   {/* Heading outside the white container */}
                   <Box 
                     width="100%" 
                     textAlign="center" 
                     mb={16} 
-                    position="relative" 
-                    zIndex="3" // Above content
+                    className="header-content"
                   >
                     <GradientTypewriter 
                       text="Jaeyoung Park" 
@@ -116,8 +114,7 @@ function App() {
                   <Box
                     maxW="container.lg"
                     mx="auto"
-                    position="relative"
-                    zIndex="2" // Above particles
+                    className="main-content"
                   >
                     <CardFlip 
                       frontContent={<Home isNameClicked={isNameClicked} />}

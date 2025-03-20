@@ -16,7 +16,6 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
 
   // Get colors based on color mode
   const particleColor = useColorModeValue("rgba(60, 60, 60, 0.8)", "rgba(255, 255, 255, 0.7)");
-  const linkColor = useColorModeValue("rgba(60, 60, 60, 0.7)", "rgba(255, 255, 255, 0.7)");
   const backgroundColor = useColorModeValue("#ffffff", "#18181b");
   
   // Adjust particle settings based on color mode
@@ -103,7 +102,7 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
           distance: connectDistance,
           links: {
             opacity: 0.7,
-            color: linkColor,
+            color: particleColor,
             width: lineWidth
           }
         }
@@ -119,18 +118,12 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
   };
 
   return (
-    <Box position="fixed" top="0" left="0" right="0" bottom="0" zIndex="0">
+    <Box className="particles-container">
       <Particles
         id="tsparticles"
         init={particlesInit}
         options={particlesConfig}
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%"
-        }}
+        className="particles-canvas"
       />
       {children}
     </Box>
