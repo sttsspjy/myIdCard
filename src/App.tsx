@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import CardFlip from './components/CardFlip'
 import CardBack from './components/CardBack'
 import GradientTypewriter from './components/GradientTypewriter'
+import ParticleBackground from './components/ParticleBackground'
 
 const theme = extendTheme({
   config: {
@@ -28,6 +29,13 @@ const theme = extendTheme({
       700: '#3f3f46',
       800: '#27272a',
       900: '#18181b',
+    }
+  },
+  styles: {
+    global: {
+      body: {
+        overflow: 'hidden', // Prevent scrollbar issues with particles
+      }
     }
   }
 })
@@ -53,24 +61,54 @@ function App() {
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <ChakraProvider theme={theme}>
         <Router>
-          <Box minH="100vh" bg="gray.50" _dark={{ bg: 'gray.900' }} width="100%">
-            <Navbar />
+          {/* Particle Background - positioned beneath everything */}
+          <ParticleBackground />
+          
+          {/* Main content */}
+          <Box 
+            minH="100vh" 
+            width="100%" 
+            position="relative" 
+            zIndex="1"
+            bg="transparent" // Changed to transparent to show particles
+            _dark={{ bg: 'transparent' }}
+          >
+            {/* Navbar with higher z-index */}
+            <Box position="relative" zIndex="10">
+              <Navbar />
+            </Box>
+            
             <Routes>
               <Route path="/" element={
-                <Box py={8} px={4} width="100%" display="flex" flexDirection="column" alignItems="center">
+                <Box 
+                  py={8} 
+                  px={4} 
+                  width="100%" 
+                  display="flex" 
+                  flexDirection="column" 
+                  alignItems="center"
+                  position="relative"
+                  zIndex="2" // Above particles
+                >
                   {/* Heading outside the white container */}
-                  <Box width="100%" textAlign="center" mb={16}>
+                  <Box 
+                    width="100%" 
+                    textAlign="center" 
+                    mb={16} 
+                    position="relative" 
+                    zIndex="3" // Above content
+                  >
                     <GradientTypewriter 
                       text="Jaeyoung Park" 
                       typingSpeed={150}
                       fontSize={{ base: "40px", md: "100px" }}
                       fontWeight="bold"
-                      initialColor="#27272a"
-                      darkModeInitialColor="#f4f4f5"
-                      gradientColors={["#FFF7B3", "#FFE4E1", "#B3E5FC", "#E1BEE7"]} // light yellow-light pink-light skyblue-light purple
+                      initialColor="#27272a" // Keeping dark text in light mode
+                      darkModeInitialColor="#f4f4f5" // Light text in dark mode
+                      gradientColors={["#FFF7B3", "#FFE4E1", "#B3E5FC", "#E1BEE7"]}
                       onClick={handleNameClick}
                       showHint={!isNameClicked}
-                      fillDuration={estimatedBioTypingTime} // Match the bio typing duration
+                      fillDuration={estimatedBioTypingTime}
                     />
                   </Box>
                   
@@ -79,6 +117,7 @@ function App() {
                     maxW="container.lg"
                     mx="auto"
                     position="relative"
+                    zIndex="2" // Above particles
                   >
                     <CardFlip 
                       frontContent={<Home isNameClicked={isNameClicked} />}

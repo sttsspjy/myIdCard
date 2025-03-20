@@ -93,9 +93,6 @@ const GradientTypewriter = ({
     });
   };
 
-  // Handle hover state
-
-
   // Handle click to start gradient animation
   const handleClick = () => {
     if (isTypingComplete && !isGradientAnimating) {
@@ -114,7 +111,7 @@ const GradientTypewriter = ({
       
       // First animation: fill from left to right (much slower now)
       controls.start({
-        clipPath: "inset(0 -10% 0 0)", // Extend beyond the right edge
+        clipPath: "inset(0 0 0 0)",
         transition: { 
           duration: fillDuration, 
           ease: "linear" // Changed to linear for a more consistent progress bar feel
