@@ -1,22 +1,21 @@
-import { Box, Flex, Link as ChakraLink, Spacer, IconButton, useBreakpointValue } from '@chakra-ui/react'
-import { useColorMode } from '@chakra-ui/color-mode'
-import { MoonIcon, SunIcon } from '@chakra-ui/icons'
+import { Box, Flex, Link as ChakraLink, Spacer, IconButton, useBreakpointValue, 
+  Menu, MenuButton, MenuList, MenuItem, Switch, Text, Tooltip, useColorMode } from '@chakra-ui/react'
+import { SettingsIcon } from '@chakra-ui/icons'
 import { useState, useEffect } from 'react'
+import { useAppContext } from '../context/AppContext'
 
 const Navbar = () => {
-  const iconSize = useBreakpointValue({ base: "sm", md: "md" });
-  const { colorMode, toggleColorMode } = useColorMode()
+  const iconSize = useBreakpointValue({ base: "md", md: "md" });
+  const { colorMode, toggleColorMode } = useColorMode();
+  const { particlesEnabled, toggleParticles } = useAppContext();
   const musicLink = 'https://www.youtube.com/watch?v=mRsUPoFtUtA'
   
-  // State for typing animation
   const [displayText, setDisplayText] = useState('');
   const fullText = "Nice to meet you.";
   const typingSpeed = 100; // ms per character
   
-  // Start typing animation when component mounts
   useEffect(() => {
     let currentIndex = 0;
-    // Add a small delay before starting the typing animation
     const initialDelay = setTimeout(() => {
       const typingInterval = setInterval(() => {
         if (currentIndex < fullText.length) {
@@ -68,13 +67,39 @@ const Navbar = () => {
         </Box>
         <Spacer />
         <Flex alignItems="center">
-          <IconButton
-            aria-label="Toggle dark mode"
-            as={colorMode === 'dark' ? SunIcon : MoonIcon}
-            onClick={toggleColorMode}
-            size={iconSize}
-            variant="ghost"
-          />
+          <Menu closeOnSelect={false}>
+            <Tooltip label="Settings" hasArrow>
+              <MenuButton
+                as={IconButton}
+                icon={<SettingsIcon />}
+                variant="ghost"
+                aria-label="Settings"
+                size={iconSize}
+              />
+            </Tooltip>
+            <MenuList minWidth="200px">
+              <MenuItem closeOnSelect={false}>
+                <Flex width="100%" justifyContent="space-between" alignItems="center">
+                  <Text>Dark Mode</Text>
+                  <Switch 
+                    isChecked={colorMode === 'dark'} 
+                    onChange={toggleColorMode} 
+                    colorScheme="blue"
+                  />
+                </Flex>
+              </MenuItem>
+              <MenuItem closeOnSelect={false}>
+                <Flex width="100%" justifyContent="space-between" alignItems="center">
+                  <Text>Particles</Text>
+                  <Switch 
+                    isChecked={particlesEnabled} 
+                    onChange={toggleParticles} 
+                    colorScheme="blue"
+                  />
+                </Flex>
+              </MenuItem>
+            </MenuList>
+          </Menu>
         </Flex>
       </Flex>
     </Box>

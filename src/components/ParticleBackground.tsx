@@ -3,27 +3,28 @@ import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import type { Engine, ISourceOptions } from "tsparticles-engine";
+import { useAppContext } from "../context/AppContext";
 
 interface ParticleBackgroundProps {
   children?: React.ReactNode;
 }
 
 const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => {
+  const { particlesEnabled } = useAppContext();
+  
   const particlesInit = useCallback(async (engine: Engine) => {
-    // Load the full version of tsParticles for more customization options
     await loadFull(engine);
   }, []);
 
-  // Get colors based on color mode
   const particleColor = useColorModeValue("rgba(60, 60, 60, 0.8)", "rgba(255, 255, 255, 0.7)");
   const backgroundColor = useColorModeValue("#ffffff", "#18181b");
   
   // Adjust particle settings based on color mode
-  const particleCount = useColorModeValue(80, 100); // More particles in dark mode
+  const particleCount = useColorModeValue(80, 100); 
   const particleSize = useColorModeValue(3, 2.5);
-  const particleSpeed = useColorModeValue(0.6, 0.5); // Slightly slower in dark mode
-  const connectDistance = useColorModeValue(150, 160); // Connection distance
-  const lineWidth = useColorModeValue(2, 1.8); // Line width
+  const particleSpeed = useColorModeValue(0.6, 0.5); 
+  const connectDistance = useColorModeValue(150, 160); 
+  const lineWidth = useColorModeValue(2, 1.8);
 
   // Configuration for particles
   const particlesConfig: ISourceOptions = {
@@ -83,7 +84,7 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
           rotateY: 1200
         }
       },
-      // Disable collisions for better performance
+      // Disable collisions
       collisions: {
         enable: false
       }
@@ -116,6 +117,17 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
       size: "cover"
     }
   };
+
+  if (!particlesEnabled) {
+    return (
+      <Box 
+        className="particles-container"
+        bg={backgroundColor}
+      >
+        {children}
+      </Box>
+    );
+  }
 
   return (
     <Box className="particles-container">
