@@ -54,7 +54,7 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
         bottom: '0',
         bgGradient: `linear(to-r, ${gradientString}, ${gradientColors[0]})`,
         backgroundSize: '400% 100%',
-        animation: 'flowGradient 8s linear infinite',
+        animation: 'flowGradient 16s linear infinite',
       }}
       _hover={{
         transform: 'scale(1.05)',
@@ -106,7 +106,7 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
           }}
           style={{ 
             transformStyle: 'preserve-3d',
-            transition: 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+            transition: 'transform 1.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
             backfaceVisibility: 'hidden'
           }}
         >
@@ -139,7 +139,7 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
           }}
           style={{ 
             transformStyle: 'preserve-3d',
-            transition: 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+            transition: 'transform 1.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
             backfaceVisibility: 'hidden'
           }}
         >

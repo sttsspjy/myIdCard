@@ -1,5 +1,5 @@
 import { Box, Flex, Link as ChakraLink, Spacer, IconButton, useBreakpointValue, 
-  Menu, MenuButton, MenuList, MenuItem, Switch, Text, Tooltip, useColorMode } from '@chakra-ui/react'
+  Menu, MenuButton, MenuList, Switch, Text, useColorMode } from '@chakra-ui/react'
 import { SettingsIcon } from '@chakra-ui/icons'
 import { useState, useEffect } from 'react'
 import { useAppContext } from '../context/AppContext'
@@ -68,17 +68,26 @@ const Navbar = () => {
         <Spacer />
         <Flex alignItems="center">
           <Menu closeOnSelect={false}>
-            <Tooltip label="Settings" hasArrow>
-              <MenuButton
-                as={IconButton}
-                icon={<SettingsIcon />}
-                variant="ghost"
-                aria-label="Settings"
-                size={iconSize}
-              />
-            </Tooltip>
-            <MenuList minWidth="200px">
-              <MenuItem closeOnSelect={false}>
+            <MenuButton
+              as={IconButton}
+              icon={<SettingsIcon />}
+              variant="ghost"
+              aria-label="Settings"
+              size={iconSize}
+            />
+            <MenuList 
+              minWidth="200px"
+              bg="white" 
+              _dark={{ bg: 'gray.900', borderColor: 'gray.700' }}
+              borderColor="gray.200"
+            >
+              <Box 
+                px={3}
+                py={2}
+                bg="white" 
+                _dark={{ bg: 'gray.900' }}
+                cursor="default"
+              >
                 <Flex width="100%" justifyContent="space-between" alignItems="center">
                   <Text>Dark Mode</Text>
                   <Switch 
@@ -87,8 +96,14 @@ const Navbar = () => {
                     colorScheme="blue"
                   />
                 </Flex>
-              </MenuItem>
-              <MenuItem closeOnSelect={false}>
+              </Box>
+              <Box 
+                px={3}
+                py={2}
+                bg="white" 
+                _dark={{ bg: 'gray.900' }}
+                cursor="default"
+              >
                 <Flex width="100%" justifyContent="space-between" alignItems="center">
                   <Text>Particles</Text>
                   <Switch 
@@ -97,7 +112,7 @@ const Navbar = () => {
                     colorScheme="blue"
                   />
                 </Flex>
-              </MenuItem>
+              </Box>
             </MenuList>
           </Menu>
         </Flex>
