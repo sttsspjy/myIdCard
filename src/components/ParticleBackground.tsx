@@ -1,7 +1,7 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
-import { Box } from "@chakra-ui/react";
+import { Box, useMediaQuery } from "@chakra-ui/react";
 import type { Engine, ISourceOptions } from "tsparticles-engine";
 import { useAppContext } from "../context/AppContext";
 
@@ -11,6 +11,7 @@ interface ParticleBackgroundProps {
 
 const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => {
   const { particlesEnabled } = useAppContext();
+  const [isMobile] = useMediaQuery("(max-width: 768px)");
   
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadFull(engine);
@@ -57,7 +58,7 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
       // Linking only near cursor
       links: {
         enable: true,
-        distance: 160,
+        distance: isMobile ? 100 : 160, // Shorter distance on mobile
         color: "rgb(255, 255, 255)", // Very transparent lines
         opacity: 0.3,
         width: 1
@@ -68,8 +69,8 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
         direction: "none",
         random: true,
         straight: false,
-        out_mode: "out",
-        bounce: false,
+        out_mode: "bounce", // Changed from "out" to "bounce" to trap particles
+        bounce: true,
         attract: {
           enable: false,
           rotateX: 600,
@@ -95,11 +96,11 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
       },
       modes: {
         connect: {
-          distance: 140,  // Distance to connect particles near cursor
+          distance: isMobile ? 100 : 140,  // Shorter distance on mobile
           links: {
-            opacity: 0.4 // Faint connections
+            opacity: 0.3 // Faint connections
           },
-          radius: 130
+          radius: isMobile ? 100 : 130
         }
       }
     },
