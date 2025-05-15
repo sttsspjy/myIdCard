@@ -113,9 +113,8 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
           {/* Inner content box */}
           <Box
             w="100%"
-            bg="white"
-            color="gray.800"
-            _dark={{ bg: 'gray.800', color: 'white' }}
+            bg="#1a1a1a"
+            color="white"
             borderRadius="lg"
             p={6}
           >
@@ -146,9 +145,8 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
           {/* Inner content box */}
           <Box
             w="100%"
-            bg="white"
-            color="gray.800"
-            _dark={{ bg: 'gray.800', color: 'white' }}
+            bg="#1a1a1a"
+            color="white"
             borderRadius="lg"
             p={6}
           >

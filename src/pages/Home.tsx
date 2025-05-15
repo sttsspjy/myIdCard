@@ -44,8 +44,7 @@ Completed military service`;
       >
         <Heading
           size={{ base: "xl", md: "2xl" }}
-          color="gray.800"
-          _dark={{ color: 'gray.100' }}
+          color="white"
         >
           Me.
         </Heading>
@@ -76,13 +75,11 @@ Completed military service`;
               href={social.url} 
               isExternal
               borderRadius="full"
-              bg="gray.100"
-              color="gray.600"
-              _dark={{ bg: 'gray.700', color: 'gray.300' }}
+              bg="rgba(255, 255, 255, 0.1)"
+              color="rgba(255, 255, 255, 0.8)"
               _hover={{ 
-                bg: 'blue.100',
-                color: 'blue.500',
-                _dark: { bg: 'blue.700', color: 'blue.200' }
+                bg: 'rgba(79, 209, 255, 0.2)',
+                color: 'rgba(255, 255, 255, 1)'
               }}
               transition="all 0.2s"
             >

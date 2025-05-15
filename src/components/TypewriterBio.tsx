@@ -80,8 +80,7 @@ const TypewriterBio = ({
       {/* Bio Text */}
       <Text 
         fontSize={{ base: "13px", md: "xl" }} 
-        color="gray.600" 
-        _dark={{ color: 'gray.300' }} 
+        color="rgba(255, 255, 255, 0.9)"
         maxW="10xl"
         whiteSpace="pre-line"
         textAlign="center"
@@ -99,8 +98,7 @@ const TypewriterBio = ({
             staticText="keeps me"
             interval={3000}
             fontSize={{ base: "13px", md: "xl" }}
-            color="gray.600"
-            darkModeColor="gray.300"
+            color="rgba(255, 255, 255, 0.9)"
           />
         </VStack>
       )}
@@ -108,8 +106,7 @@ const TypewriterBio = ({
       {/* Additional Text */}
       <Text 
         fontSize={{ base: "13px", md: "xl" }} 
-        color="gray.600" 
-        _dark={{ color: 'gray.300' }} 
+        color="rgba(255, 255, 255, 0.9)"
         maxW="10xl"
         whiteSpace="pre-line"
         textAlign="center"

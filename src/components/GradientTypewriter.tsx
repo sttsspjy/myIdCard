@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Box, Text, useColorMode } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { motion, useAnimation } from 'framer-motion';
 
 interface GradientTypewriterProps {
@@ -8,11 +8,8 @@ interface GradientTypewriterProps {
   fontSize?: any;
   fontWeight?: string;
   initialColor?: string;
-  darkModeInitialColor?: string;
   gradientColors?: string[];
-  darkGradientColors?: string[];
   onClick?: () => void;
-  showHint?: boolean;
   fillDuration?: number;
   flowDuration?: number;
 }
@@ -23,42 +20,29 @@ const GradientTypewriter = ({
   fontSize,
   fontWeight,
   initialColor,
-  darkModeInitialColor,
   gradientColors,
-  darkGradientColors,
   onClick,
-  showHint,
   fillDuration, 
   flowDuration
 }: GradientTypewriterProps) => {
-  const [displayText, setDisplayText] = useState(text); // Initialize with full text to prevent retyping
+  const [displayText, setDisplayText] = useState(text);
   const [isTypingComplete, setIsTypingComplete] = useState(false);
   const [isGradientAnimating, setIsGradientAnimating] = useState(false);
   const [, setIsFlowing] = useState(false);
-  const [showTapHint, setShowTapHint] = useState(showHint);
   const controls = useAnimation();
   const flowControls = useAnimation();
-  const hintControls = useAnimation();
   const glowControls = useAnimation();
+  const shadowControls = useAnimation();
   const textRef = useRef<HTMLDivElement>(null);
-  const { colorMode } = useColorMode();
-  const isDarkMode = colorMode === 'dark';
-  const hasTypedRef = useRef(false); // Ref to track if typing has occurred
-
-  // Get the appropriate gradient colors based on the current theme
-  const activeGradientColors = isDarkMode && darkGradientColors ? 
-                              darkGradientColors : 
-                              gradientColors;
-
+  const hasTypedRef = useRef(false); 
+  
   // Start typing animation when component mounts, but only once
   useEffect(() => {
-    // Skip typing if it's already been done
     if (hasTypedRef.current) {
       setIsTypingComplete(true);
       return;
     }
 
-    // Start with empty text
     setDisplayText('');
     
     let currentIndex = 0;
@@ -71,26 +55,13 @@ const GradientTypewriter = ({
         setIsTypingComplete(true);
         hasTypedRef.current = true; // Mark typing as completed
         
-        // Start hint animation when typing is complete with stronger animation
-        if (showHint) {
-          hintControls.start({
-            opacity: [0.7, 1],
-            scale: [1, 1.05, 1],
-            transition: {
-              duration: 2,
-              repeat: Infinity,
-              repeatType: "reverse"
-            }
-          });
-        }
-        
         // Start subtle glow animation
         startGlowAnimation();
       }
     }, typingSpeed);
 
     return () => clearInterval(typingInterval);
-  }, [text, typingSpeed, showHint, hintControls]);
+  }, [text, typingSpeed]);
   
   // Start the glow animation
   const startGlowAnimation = () => {
@@ -107,15 +78,15 @@ const GradientTypewriter = ({
   const handleClick = () => {
     if (isTypingComplete && !isGradientAnimating) {
       setIsGradientAnimating(true);
-      setShowTapHint(false);
       
       // Stop glow animation
       glowControls.stop();
       glowControls.set({ textShadow: "none" });
       
-      // Hide the hint
-      hintControls.start({
-        opacity: 0,
+      // Remove the shadow
+      shadowControls.start({
+        textShadow: "none",
+        transition: { duration: 0.5 }
       });
       
       // fill from left to right
@@ -170,11 +141,12 @@ const GradientTypewriter = ({
           as={motion.span}
           fontSize={fontSize}
           fontWeight={fontWeight}
-          color={isDarkMode ? darkModeInitialColor : initialColor}
+          color={initialColor}
           position="relative"
           whiteSpace="nowrap"
           userSelect="none"
-          animate={glowControls}
+          animate={shadowControls}
+          initial={{ textShadow: "0 0 10px rgba(255, 255, 255, 0.7)" }}
           sx={{
             WebkitFontSmoothing: 'antialiased',
             MozOsxFontSmoothing: 'grayscale',
@@ -204,7 +176,7 @@ const GradientTypewriter = ({
               as={motion.span}
               fontSize={fontSize}
               fontWeight={fontWeight}
-              background={getExtendedGradient(activeGradientColors)}
+              background={getExtendedGradient(gradientColors)}
               backgroundSize="200% 100%"
               animate={flowControls}
               bgClip="text"
@@ -222,26 +194,6 @@ const GradientTypewriter = ({
           </Box>
         )}
       </Box>
-      
-      {/* Tap hint text */}
-      {showTapHint && isTypingComplete && (
-        <Box
-          as={motion.div}
-          initial={{ opacity: 0.7 }}
-          animate={hintControls}
-          mt={3}
-        >
-          <Text
-            fontSize={{ base: "md", md: "lg" }}
-            color={isDarkMode ? "blue.200" : "blue.500"}
-            fontWeight="medium"
-            textShadow={isDarkMode ? "0 0 8px rgba(255,255,255,0.3)" : "0 0 8px rgba(0,0,0,0.2)"}
-            letterSpacing="wide"
-          >
-            tap on my name
-          </Text>
-        </Box>
-      )}
     </Box>
   );
 };

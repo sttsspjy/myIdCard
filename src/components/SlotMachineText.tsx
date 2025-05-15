@@ -9,7 +9,6 @@ interface SlotMachineTextProps {
   interval?: number;
   fontSize?: any;
   color?: string;
-  darkModeColor?: string;
 }
 
 const SlotMachineText = ({
@@ -18,8 +17,7 @@ const SlotMachineText = ({
   staticText = "keeps me",
   interval = 3000,
   fontSize = { base: "sm", md: "xl" },
-  color = "gray.600",
-  darkModeColor = "gray.300"
+  color = "rgba(255, 255, 255, 0.9)"
 }: SlotMachineTextProps) => {
   const [currentFirstIndex, setCurrentFirstIndex] = useState(0);
   const [currentLastIndex, setCurrentLastIndex] = useState(0);
@@ -59,7 +57,6 @@ const SlotMachineText = ({
       textAlign="center"
       fontSize={fontSize}
       color={color}
-      _dark={{ color: darkModeColor }}
       my={2}
       overflow="visible"
     >

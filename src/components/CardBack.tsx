@@ -15,23 +15,21 @@ const CardBack = ({ shoutOuts }: CardBackProps) => {
         borderRadius="md" 
         objectFit="cover"
         border="2px solid"
-        borderColor="gray.200"
-        _dark={{ borderColor: 'gray.600' }}
+        borderColor="rgba(255, 255, 255, 0.3)"
+        filter="drop-shadow(0 0 8px rgba(255, 255, 255, 0.2))"
       />
       
       <VStack align="center" spacing={4} w="100%">
         <Heading 
           size={{ base: "lg", md: "xl" }} 
-          color="gray.800" 
-          _dark={{ color: 'gray.100' }}
+          color="white"
         >
           Shoutouts
         </Heading>
         
         <Text 
           fontSize={{ base: "md", md: "lg" }} 
-          color="gray.600" 
-          _dark={{ color: 'gray.300' }}
+          color="rgba(255, 255, 255, 0.9)"
           whiteSpace="pre-line"
           textAlign="center"
         >

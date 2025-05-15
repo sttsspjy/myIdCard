@@ -1,4 +1,4 @@
-import { ChakraProvider, Box, extendTheme, ColorModeScript } from '@chakra-ui/react'
+import { ChakraProvider, Box, extendTheme } from '@chakra-ui/react'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import { useState, useCallback } from 'react'
 import Navbar from './components/Navbar'
@@ -11,10 +11,6 @@ import { AppProvider } from './context/AppContext'
 import './App.css'
 
 const theme = extendTheme({
-  config: {
-    initialColorMode: 'dark',
-    useSystemColorMode: false,
-  },
   fonts: {
     heading: '"Roboto", sans-serif',
     body: '"Roboto", sans-serif',
@@ -36,7 +32,8 @@ const theme = extendTheme({
   styles: {
     global: {
       body: {
-        overflowX: 'hidden'
+        overflowX: 'hidden',
+        bg: '#000000'
       }
     }
   }
@@ -60,7 +57,6 @@ function App() {
   
   return (
     <>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <ChakraProvider theme={theme}>
         <AppProvider>
           <Router>
@@ -73,7 +69,6 @@ function App() {
               width="100%" 
               className="content-layer"
               bg="transparent"
-              _dark={{ bg: 'transparent' }}
             >
               {/* Navbar with higher z-index */}
               <Box className="navbar-layer">
@@ -103,22 +98,14 @@ function App() {
                         typingSpeed={150}
                         fontSize={{ base: "40px", md: "100px" }}
                         fontWeight="bold"
-                        initialColor="gray.300"
-                        darkModeInitialColor="gray.500"
+                        initialColor="#000000"
                         gradientColors={[
-                          "#F9E79F", // darker yellow
-                          "#F5B7B1", // darker pink
-                          "#85C1E9", // darker skyblue
-                          "#C39BD3"  // darker purple
-                        ]}
-                        darkGradientColors={[
                           "#FFF7B3", // light yellow
                           "#FFE4E1", // light pink
                           "#B3E5FC", // light skyblue
                           "#E1BEE7"  // light purple
                         ]}
                         onClick={handleNameClick}
-                        showHint={!isNameClicked}
                         fillDuration={estimatedBioTypingTime}
                         flowDuration={15}
                       />

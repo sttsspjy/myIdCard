@@ -1,7 +1,7 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
-import { Box, useColorModeValue } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import type { Engine, ISourceOptions } from "tsparticles-engine";
 import { useAppContext } from "../context/AppContext";
 
@@ -16,16 +16,10 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
     await loadFull(engine);
   }, []);
 
-  const particleColor = useColorModeValue("rgba(60, 60, 60, 0.8)", "rgba(255, 255, 255, 0.7)");
-  const backgroundColor = useColorModeValue("#ffffff", "#18181b");
+  // Cosmic theme configuration
+  const blackBackground = "#000000"; // Pitch black background for particles ON
+  const grayBackground = "#18181b"; // Gray background for particles OFF
   
-  // Adjust particle settings based on color mode
-  const particleCount = useColorModeValue(80, 100); 
-  const particleSize = useColorModeValue(3, 2.5);
-  const particleSpeed = useColorModeValue(0.6, 0.5); 
-  const connectDistance = useColorModeValue(150, 160); 
-  const lineWidth = useColorModeValue(2, 1.8);
-
   // Configuration for particles
   const particlesConfig: ISourceOptions = {
     fullScreen: {
@@ -34,45 +28,43 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
     fpsLimit: 60,
     particles: {
       number: {
-        value: particleCount,
+        value: 210, // More stars
         density: {
           enable: true,
           value_area: 1000
         }
       },
       color: {
-        value: particleColor
+        value: ["#ffffff", "#77ccff", "#ff88cc", "#ffcc66", "#88ff88", "#aa88ff"], // Multi-colored stars
       },
       shape: {
         type: "circle"
       },
       opacity: {
-        value: 0.9,
+        value: 1,
         random: true,
         anim: {
           enable: true,
-          speed: 0.3,
-          opacity_min: 0.7,
+          speed: 0.02, // Even slower opacity animation
+          opacity_min: 0.4, // Higher minimum opacity
           sync: false
         }
       },
       size: {
-        value: particleSize,
-        random: true,
-        anim: {
-          enable: false,
-          speed: 40,
-          size_min: 0.1,
-          sync: false
-        }
+        value: 3,
+        random: true
       },
-      // disable links between particles
+      // Linking only near cursor
       links: {
-        enable: false
+        enable: true,
+        distance: 160,
+        color: "rgb(255, 255, 255)", // Very transparent lines
+        opacity: 0.3,
+        width: 1
       },
       move: {
         enable: true,
-        speed: particleSpeed,
+        speed: 0.3,
         direction: "none",
         random: true,
         straight: false,
@@ -94,49 +86,60 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
       events: {
         onHover: {
           enable: true,
-          mode: "grab"
+          mode: "connect" // Connect lines on hover
+        },
+        onClick: {
+          enable: false // Disable click interaction
         },
         resize: true
       },
       modes: {
-        grab: {
-          distance: connectDistance,
+        connect: {
+          distance: 140,  // Distance to connect particles near cursor
           links: {
-            opacity: 0.7,
-            color: particleColor,
-            width: lineWidth
-          }
+            opacity: 0.4 // Faint connections
+          },
+          radius: 130
         }
       }
     },
     retina_detect: true,
     background: {
-      color: backgroundColor,
+      color: blackBackground,
       position: "50% 50%",
       repeat: "no-repeat",
       size: "cover"
     }
   };
 
-  if (!particlesEnabled) {
-    return (
-      <Box 
-        className="particles-container"
-        bg={backgroundColor}
-      >
-        {children}
-      </Box>
-    );
-  }
+  // Update document body background color based on particles state
+  useEffect(() => {
+    const documentBody = document.body;
+    
+    // Update background color with transition
+    if (particlesEnabled) {
+      // Transitioning to black
+      documentBody.style.transition = "background-color 0.8s ease";
+      documentBody.style.backgroundColor = blackBackground;
+    } else {
+      // Transitioning to gray
+      documentBody.style.transition = "background-color 0.8s ease";
+      documentBody.style.backgroundColor = grayBackground;
+    }
+  }, [particlesEnabled]);
 
   return (
-    <Box className="particles-container">
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        options={particlesConfig}
-        className="particles-canvas"
-      />
+    <Box 
+      className="particles-container"
+    >
+      {particlesEnabled && (
+        <Particles
+          id="tsparticles"
+          init={particlesInit}
+          options={particlesConfig}
+          className="particles-canvas"
+        />
+      )}
       {children}
     </Box>
   );
