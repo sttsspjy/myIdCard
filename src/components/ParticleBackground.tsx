@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import { Box, useMediaQuery } from "@chakra-ui/react";
@@ -117,16 +117,19 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
   useEffect(() => {
     const documentBody = document.body;
     
-    // Update background color with transition
-    if (particlesEnabled) {
-      // Transitioning to black
-      documentBody.style.transition = "background-color 0.8s ease";
-      documentBody.style.backgroundColor = blackBackground;
-    } else {
-      // Transitioning to gray
-      documentBody.style.transition = "background-color 0.8s ease";
-      documentBody.style.backgroundColor = grayBackground;
-    }
+    // Set transition property first
+    documentBody.style.transition = "background-color 0.8s ease";
+    
+    // Use setTimeout to ensure transition is applied
+    setTimeout(() => {
+      // Then update the background color
+      if (particlesEnabled) {
+        documentBody.style.backgroundColor = blackBackground;
+      } else {
+        documentBody.style.backgroundColor = grayBackground;
+      }
+    }, 10); // Tiny delay to ensure transition is registered
+    
   }, [particlesEnabled]);
 
   return (

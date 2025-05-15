@@ -5,8 +5,7 @@ import TypewriterBio from '../components/TypewriterBio'
 const Home = ({ isNameClicked = false }) => {
   // Split the text by periods and format with line breaks
   const bioText = `Guy. 2000-born in Seoul.
-  182cm Hunchback
-  Atheist
+  182cm
   INTJ
 I can speak English.
 
