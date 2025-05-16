@@ -9,6 +9,7 @@ interface SlotMachineTextProps {
   interval?: number;
   fontSize?: any;
   color?: string;
+  wordColors?: string[]; // Array of base colors for gradients
 }
 
 const SlotMachineText = ({
@@ -17,7 +18,8 @@ const SlotMachineText = ({
   staticText = "keeps me",
   interval = 3000,
   fontSize = { base: "sm", md: "xl" },
-  color = "rgba(255, 255, 255, 0.9)"
+  color = "rgba(255, 255, 255, 0.9)",
+  wordColors = ["#FF5555", "#55AAFF", "#55FF7F", "#FFAA55", "#AA55FF"] // Default gradient base colors
 }: SlotMachineTextProps) => {
   const [currentFirstIndex, setCurrentFirstIndex] = useState(0);
   const [currentLastIndex, setCurrentLastIndex] = useState(0);
@@ -49,6 +51,10 @@ const SlotMachineText = ({
     exit: { y: 20, opacity: 0 }
   };
 
+  // Get the current color for the word set
+  const getCurrentColorIndex = () => currentFirstIndex % wordColors.length;
+  const getCurrentColor = () => wordColors[getCurrentColorIndex()];
+
   return (
     <Flex 
       width="100%" 
@@ -75,7 +81,16 @@ const SlotMachineText = ({
             exit="exit"
             variants={variants}
             transition={{ duration: 0.5 } as any}
-            style={{ position: 'absolute', width: '100%', right: 0 }}
+            style={{ 
+              position: 'absolute', 
+              width: '100%', 
+              right: 0,
+              background: `linear-gradient(to right, ${getCurrentColor()}, white)`,
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              fontWeight: 'bold'
+            }}
           >
             {firstWords[currentFirstIndex]}
           </motion.div>
@@ -99,7 +114,16 @@ const SlotMachineText = ({
             exit="exit"
             variants={variants}
             transition={{ duration: 0.5 } as any}
-            style={{ position: 'absolute', width: '100%', left: 0 }}
+            style={{ 
+              position: 'absolute', 
+              width: '100%', 
+              left: 0,
+              background: `linear-gradient(to right, white, ${getCurrentColor()})`,
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              fontWeight: 'bold'
+            }}
           >
             {lastWords[currentLastIndex]}
           </motion.div>

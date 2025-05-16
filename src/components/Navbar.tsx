@@ -1,35 +1,12 @@
 import { Box, Flex, Link as ChakraLink, Spacer, IconButton, useBreakpointValue, 
   Menu, MenuButton, MenuList, Switch, Text } from '@chakra-ui/react'
 import { SettingsIcon } from '@chakra-ui/icons'
-import { useState, useEffect } from 'react'
 import { useAppContext } from '../context/AppContext'
 
 const Navbar = () => {
   const iconSize = useBreakpointValue({ base: "md", md: "md" });
   const { particlesEnabled, toggleParticles } = useAppContext();
   const musicLink = 'https://www.youtube.com/watch?v=mRsUPoFtUtA'
-  
-  const [displayText, setDisplayText] = useState('');
-  const fullText = "Nice to meet you.";
-  const typingSpeed = 100; // ms per character
-  
-  useEffect(() => {
-    let currentIndex = 0;
-    const initialDelay = setTimeout(() => {
-      const typingInterval = setInterval(() => {
-        if (currentIndex < fullText.length) {
-          setDisplayText(fullText.substring(0, currentIndex + 1));
-          currentIndex++;
-        } else {
-          clearInterval(typingInterval);
-        }
-      }, typingSpeed);
-      
-      return () => clearInterval(typingInterval);
-    }, 1000); // 1 second delay before typing starts
-    
-    return () => clearTimeout(initialDelay);
-  }, []);
   
   return (
     <Box bg="transparent" px={4} shadow="none" position="relative" zIndex="10">
@@ -50,17 +27,6 @@ const Navbar = () => {
           >
             Hi.
           </ChakraLink>
-          <Box
-            fontSize={{ base: "xl", md: "2xl" }}
-            fontWeight="bold"
-            color="white"
-            position="absolute"
-            left="100%"
-            whiteSpace="nowrap"
-            ml={1}
-          >
-            {displayText}
-          </Box>
         </Box>
         <Spacer />
         <Flex alignItems="center">

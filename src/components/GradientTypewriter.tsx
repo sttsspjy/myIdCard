@@ -28,7 +28,6 @@ const GradientTypewriter = ({
   const [displayText, setDisplayText] = useState(text);
   const [isTypingComplete, setIsTypingComplete] = useState(false);
   const [isGradientAnimating, setIsGradientAnimating] = useState(false);
-  const [, setIsFlowing] = useState(false);
   const controls = useAnimation();
   const flowControls = useAnimation();
   const glowControls = useAnimation();
@@ -98,7 +97,6 @@ const GradientTypewriter = ({
         }
       }).then(() => {
         // After fill-up is complete, start the flowing animation
-        setIsFlowing(true);
         flowControls.start({
           backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
           transition: {

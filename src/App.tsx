@@ -52,8 +52,7 @@ function App() {
   }, []);
   
   // Shoutouts text for card back
-  const shoutOuts = `Friends and family.
-  React, Chakra UI, Cursor.`;
+  const shoutOuts = `React, Chakra UI, Cursor.`;
   
   return (
     <>

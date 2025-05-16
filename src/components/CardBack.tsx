@@ -24,7 +24,7 @@ const CardBack = ({ shoutOuts }: CardBackProps) => {
           size={{ base: "lg", md: "xl" }} 
           color="white"
         >
-          Shoutouts
+          Ref.
         </Heading>
         
         <Text 

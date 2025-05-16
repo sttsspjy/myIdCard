@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Box, Button, VStack, Text } from '@chakra-ui/react';
+import { Box, IconButton, VStack } from '@chakra-ui/react';
+import { RepeatIcon } from '@chakra-ui/icons';
 import { motion } from 'framer-motion';
 
 interface CardFlipProps {
@@ -11,16 +12,10 @@ interface CardFlipProps {
 const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
   
-  // Join colors for gradient
+  // Join colors for gradient (keeping for button use only)
   const gradientString = gradientColors.join(', ');
   
-  // Define gradient animation styles
-  const gradientAnimationStyles = {
-    bgGradient: `linear(to right, ${gradientString}, ${gradientColors[0]})`,
-    backgroundSize: '400% 100%',
-    animation: 'gradientFlow 10s linear infinite',
-  };
-  
+  // Define gradient animation styles (only for button now)
   const gradientSx = {
     '@keyframes gradientFlow': {
       '0%': { backgroundPosition: '0% 0%' },
@@ -33,39 +28,52 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
   };
   
   const FlipButton = () => (
-    <Button
-      onClick={() => setIsFlipped(prev => !prev)}
-      borderRadius="xl"
-      size="md"
-      px={7}
-      py={5}
-      mt={4}
-      fontSize="md"
-      fontWeight="bold"
-      color="#27272a"
+    <Box
       position="relative"
+      borderRadius="full"
       overflow="hidden"
-      _before={{
-        content: '""',
-        position: 'absolute',
-        top: '0',
-        left: '0',
-        right: '0',
-        bottom: '0',
-        bgGradient: `linear(to-r, ${gradientString}, ${gradientColors[0]})`,
-        backgroundSize: '400% 100%',
-        animation: 'flowGradient 16s linear infinite',
+      display="inline-block"
+      mt={4}
+      css={{
+        '&:hover': {
+          transform: 'scale(1.1)',
+        },
+        transition: 'transform 0.2s',
       }}
-      _hover={{
-        transform: 'scale(1.05)',
-      }}
-      transition="transform 0.2s"
-      sx={gradientSx}
     >
-      <Text position="relative" zIndex={1}>
-        Flip
-      </Text>
-    </Button>
+      {/* Gradient background */}
+      <Box
+        position="absolute"
+        top="0"
+        left="0"
+        right="0"
+        bottom="0"
+        bgGradient={`linear(to-r, ${gradientString}, ${gradientColors[0]})`}
+        backgroundSize="400% 100%"
+        animation="flowGradient 16s linear infinite"
+        zIndex={0}
+        sx={gradientSx}
+      />
+      
+      {/* Icon button on top */}
+      <IconButton
+        icon={<RepeatIcon boxSize="1.5em" />}
+        onClick={() => setIsFlipped(prev => !prev)}
+        aria-label="Flip card"
+        borderRadius="full"
+        size="lg"
+        color="black"
+        bg="transparent"
+        zIndex={1}
+        position="relative"
+        _hover={{
+          bg: 'transparent',
+        }}
+        _active={{
+          bg: 'transparent',
+        }}
+      />
+    </Box>
   );
   
   // Create enhanced content with the button included
@@ -82,6 +90,16 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
       <FlipButton />
     </VStack>
   );
+
+  // Frosted glass card style
+  const cardStyle = {
+    background: 'rgba(15, 15, 15, 0.8)', // Darker and slightly transparent
+    backdropFilter: 'blur(8px)',
+    WebkitBackdropFilter: 'blur(8px)',
+    borderRadius: '0px', // Square corners
+    border: '1px solid rgba(255, 255, 255, 0.1)', // Subtle border
+    boxShadow: '0 0 15px 2px rgba(255, 255, 255, 0.15)', // Subtle white glow
+  };
   
   return (
     <Box w="100%" position="relative">
@@ -91,15 +109,12 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
         w="100%"
         style={{ perspective: '1500px' }}
       >
-        {/* Front of card with gradient border */}
+        {/* Front of card */}
         <Box
           as={motion.div}
           position="relative"
           w="100%"
           display={isFlipped ? "none" : "block"}
-          borderRadius="xl"
-          padding="4px" // Thicker border
-          {...gradientAnimationStyles}
           sx={gradientSx}
           animate={{
             rotateY: isFlipped ? 180 : 0
@@ -107,30 +122,25 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
           style={{ 
             transformStyle: 'preserve-3d',
             transition: 'transform 1.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-            backfaceVisibility: 'hidden'
+            backfaceVisibility: 'hidden',
+            ...cardStyle
           }}
         >
           {/* Inner content box */}
           <Box
             w="100%"
-            bg="#1a1a1a"
-            color="white"
-            borderRadius="lg"
             p={6}
           >
             {enhancedFrontContent}
           </Box>
         </Box>
         
-        {/* Back of card with gradient border */}
+        {/* Back of card */}
         <Box
           as={motion.div}
           position="relative"
           w="100%"
           display={isFlipped ? "block" : "none"}
-          borderRadius="xl"
-          padding="4px" // Thicker border
-          {...gradientAnimationStyles}
           sx={gradientSx}
           initial={{ rotateY: 180 }}
           animate={{
@@ -139,15 +149,13 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
           style={{ 
             transformStyle: 'preserve-3d',
             transition: 'transform 1.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-            backfaceVisibility: 'hidden'
+            backfaceVisibility: 'hidden',
+            ...cardStyle
           }}
         >
           {/* Inner content box */}
           <Box
             w="100%"
-            bg="#1a1a1a"
-            color="white"
-            borderRadius="lg"
             p={6}
           >
             {enhancedBackContent}
