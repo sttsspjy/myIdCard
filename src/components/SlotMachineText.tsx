@@ -9,7 +9,7 @@ interface SlotMachineTextProps {
   interval?: number;
   fontSize?: any;
   color?: string;
-  wordColors?: string[]; // Array of base colors for gradients
+  wordColors?: string[];
 }
 
 const SlotMachineText = ({
@@ -19,7 +19,7 @@ const SlotMachineText = ({
   interval = 3000,
   fontSize = { base: "sm", md: "xl" },
   color = "rgba(255, 255, 255, 0.9)",
-  wordColors = ["#FF5555", "#55AAFF", "#55FF7F", "#FFAA55", "#AA55FF"] // Default gradient base colors
+  wordColors = ["#FF5555", "#55AAFF", "#55FF7F", "#FFAA55", "#AA55FF"]
 }: SlotMachineTextProps) => {
   const [currentFirstIndex, setCurrentFirstIndex] = useState(0);
   const [currentLastIndex, setCurrentLastIndex] = useState(0);

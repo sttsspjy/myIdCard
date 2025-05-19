@@ -35,7 +35,7 @@ const GradientTypewriter = ({
   const textRef = useRef<HTMLDivElement>(null);
   const hasTypedRef = useRef(false); 
   
-  // Start typing animation when component mounts, but only once
+  // Start typing animation when component mounts
   useEffect(() => {
     if (hasTypedRef.current) {
       setIsTypingComplete(true);
@@ -134,7 +134,6 @@ const GradientTypewriter = ({
         ref={textRef}
         position="relative"
       >
-        {/* Base text with initial color */}
         <Box 
           as={motion.span}
           fontSize={fontSize}
@@ -166,7 +165,7 @@ const GradientTypewriter = ({
             display="flex"
             justifyContent="center"
             alignItems="center"
-            initial={{ clipPath: "inset(0 100% 0 0)" }} // Start completely hidden with extra margin
+            initial={{ clipPath: "inset(0 100% 0 0)" }}
             animate={controls}
             pointerEvents="none"
           >

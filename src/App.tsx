@@ -42,9 +42,9 @@ const theme = extendTheme({
 function App() {
   const [isNameClicked, setIsNameClicked] = useState(false);
   
-  const bioTextLength = 300; // Approximate length of bio text
-  const typingSpeed = 45; // Milliseconds per character for bio typing (increased from 30)
-  const estimatedBioTypingTime = (bioTextLength * typingSpeed) / 1000; // Convert to seconds
+  const bioTextLength = 300;
+  const typingSpeed = 45; 
+  const bioTypingTime = (bioTextLength * typingSpeed) / 1000;
   
   // Use useCallback to prevent unnecessary re-renders
   const handleNameClick = useCallback(() => {
@@ -105,7 +105,7 @@ function App() {
                           "#E1BEE7"  // light purple
                         ]}
                         onClick={handleNameClick}
-                        fillDuration={estimatedBioTypingTime}
+                        fillDuration={bioTypingTime}
                         flowDuration={15}
                       />
                     </Box>

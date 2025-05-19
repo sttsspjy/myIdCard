@@ -11,11 +11,8 @@ interface CardFlipProps {
 
 const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
-  
-  // Join colors for gradient (keeping for button use only)
   const gradientString = gradientColors.join(', ');
   
-  // Define gradient animation styles (only for button now)
   const gradientSx = {
     '@keyframes gradientFlow': {
       '0%': { backgroundPosition: '0% 0%' },
@@ -76,7 +73,6 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
     </Box>
   );
   
-  // Create enhanced content with the button included
   const enhancedFrontContent = (
     <VStack w="100%" spacing={3} px={4} py={6}>
       {frontContent}
@@ -93,12 +89,11 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
 
   // Frosted glass card style
   const cardStyle = {
-    background: 'rgba(15, 15, 15, 0.8)', // Darker and slightly transparent
+    background: 'rgba(15, 15, 15, 0.8)',
     backdropFilter: 'blur(8px)',
     WebkitBackdropFilter: 'blur(8px)',
-    borderRadius: '0px', // Square corners
-    border: '1px solid rgba(255, 255, 255, 0.1)', // Subtle border
-    boxShadow: '0 0 15px 2px rgba(255, 255, 255, 0.15)', // Subtle white glow
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    boxShadow: '0 0 15px 2px rgba(255, 255, 255, 0.15)',
   };
   
   return (
