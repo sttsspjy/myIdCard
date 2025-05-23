@@ -19,11 +19,10 @@ const SlotMachineText = ({
   interval = 3000,
   fontSize = { base: "sm", md: "xl" },
   color = "rgba(255, 255, 255, 0.9)",
-  wordColors = ["#FF5555", "#55AAFF", "#55FF7F", "#FFAA55", "#AA55FF"]
+  wordColors = ["#FF5555", "#55AAFF", "#FFAA55", "#AA55FF"]
 }: SlotMachineTextProps) => {
   const [currentFirstIndex, setCurrentFirstIndex] = useState(0);
   const [currentLastIndex, setCurrentLastIndex] = useState(0);
-  const [, setIsChanging] = useState(false);
 
   // Find the longest word in each array to set minimum width
   const longestFirstWord = firstWords.reduce((a, b) => a.length > b.length ? a : b, "");
@@ -31,12 +30,10 @@ const SlotMachineText = ({
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setIsChanging(true);
       
       setTimeout(() => {
         setCurrentFirstIndex((prevIndex) => (prevIndex + 1) % firstWords.length);
         setCurrentLastIndex((prevIndex) => (prevIndex + 1) % lastWords.length);
-        setIsChanging(false);
       }, 500); // Half the transition time
       
     }, interval);

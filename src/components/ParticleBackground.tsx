@@ -17,7 +17,6 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
     await loadFull(engine);
   }, []);
 
-  // Export bioText for use in other components
   const cosmicGradientBackground = `
     radial-gradient(ellipse at top,rgb(19, 11, 34) 0%,rgb(12, 4, 20) 40%, transparent 90%),
     radial-gradient(ellipse at left,rgb(6, 27, 31) 0%, transparent 75%),
@@ -26,7 +25,6 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
     linear-gradient(135deg, #000000 0%,rgb(9, 0, 17) 50%,rgb(0, 4, 14) 100%)
   `;
 
-  
   // Configuration for particles
   const particlesConfig: ISourceOptions = {
     fullScreen: {

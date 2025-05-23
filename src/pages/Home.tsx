@@ -24,8 +24,8 @@ interface HomeProps {
 
 const Home = ({ isNameClicked = false, onBioTypingComplete, isBioTypingComplete = false }: HomeProps) => {
   // Slot machine text arrays
-  const firstWords = ["Metacognition", "Underdogma", "Hipsterism", "Curiosity", "Pessimism"];
-  const lastWords = ["alive", "running", "proud", "dreaming", "objective"];
+  const firstWords = ["Metacognition", "Underdogma", "Curiosity", "Pessimism"];
+  const lastWords = ["alive", "running", "dreaming", "objective"];
 
   const additionalText = `Find me at the peak of "Mount Stupid".`;
 
