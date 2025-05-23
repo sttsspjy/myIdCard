@@ -2,9 +2,8 @@ import { Heading, VStack, HStack, Link as ChakraLink, useBreakpointValue, Box } 
 import { FaFacebook, FaGithub, FaSteam } from 'react-icons/fa'
 import TypewriterBio from '../components/TypewriterBio'
 
-const Home = ({ isNameClicked = false }) => {
-  // Split the text by periods and format with line breaks
-  const bioText = `Guy. 2000-born in Seoul.
+// Export bioText for use in other components
+export const bioText = `Guy. 2000-born in Seoul.
   182cm
   INTJ
 I can speak English.
@@ -17,6 +16,13 @@ IGCSE O & A-level examinee
 University of Melbourne Graduate
 Completed military service`;
 
+interface HomeProps {
+  isNameClicked?: boolean;
+  onBioTypingComplete?: () => void;
+  isBioTypingComplete?: boolean;
+}
+
+const Home = ({ isNameClicked = false, onBioTypingComplete, isBioTypingComplete = false }: HomeProps) => {
   // Slot machine text arrays
   const firstWords = ["Metacognition", "Underdogma", "Hipsterism", "Curiosity", "Pessimism"];
   const lastWords = ["alive", "running", "proud", "dreaming", "objective"];
@@ -57,14 +63,15 @@ Completed military service`;
         lastWords={lastWords}
         typingSpeed={40}
         isActive={isNameClicked}
+        onTypingComplete={onBioTypingComplete}
       />
       
-      {/* Icons - only show when bio is active */}
+      {/* Icons - only show when bio typing is complete */}
       <HStack 
         spacing={5} 
-        opacity={isNameClicked ? 1 : 0}
+        opacity={isBioTypingComplete ? 1 : 0}
         transition="opacity 0.5s ease-in"
-        transitionDelay="2s"
+        pointerEvents={isBioTypingComplete ? "auto" : "none"}
       >
         {socialLinks.map((social) => {
           const IconComponent = social.icon;

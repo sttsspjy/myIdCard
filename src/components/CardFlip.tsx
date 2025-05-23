@@ -7,11 +7,31 @@ interface CardFlipProps {
   frontContent: React.ReactNode;
   backContent: React.ReactNode;
   gradientColors: string[];
+  showFlipButton?: boolean;
 }
 
-const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) => {
+const CardFlip = ({ frontContent, backContent, gradientColors, showFlipButton = true }: CardFlipProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const gradientString = gradientColors.join(', ');
+  
+  const cardVariants = {
+    frontInitial: { 
+      rotateY: 0,
+      transition: { duration: 0.6, ease: "easeInOut" }
+    },
+    frontFlipped: { 
+      rotateY: 180,
+      transition: { duration: 0.6, ease: "easeInOut" }
+    },
+    backInitial: { 
+      rotateY: 180,
+      transition: { duration: 0.6, ease: "easeInOut" }
+    },
+    backFlipped: { 
+      rotateY: 360,
+      transition: { duration: 0.6, ease: "easeInOut" }
+    }
+  };
   
   const gradientSx = {
     '@keyframes gradientFlow': {
@@ -26,16 +46,23 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
   
   const FlipButton = () => (
     <Box
+      as={motion.div}
       position="relative"
       borderRadius="full"
       overflow="hidden"
       display="inline-block"
       mt={4}
-      css={{
-        '&:hover': {
-          transform: 'scale(1.1)',
-        },
-        transition: 'transform 0.2s',
+      initial={{ opacity: 0 }}
+      animate={{ opacity: showFlipButton ? 1 : 0 }}
+      transition={{ duration: 0.5, ease: "easeIn", delay: showFlipButton ? 1 : 0 } as any}
+      style={{
+        pointerEvents: showFlipButton ? "auto" : "none",
+      }}
+      _hover={{
+        transform: 'scale(1.1)',
+      }}
+      sx={{
+        transition: 'transform 0.2s ease',
       }}
     >
       {/* Gradient background */}
@@ -89,7 +116,7 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
 
   // Frosted glass card style
   const cardStyle = {
-    background: 'rgba(15, 15, 15, 0.8)',
+    background: 'rgba(0, 0, 0, 0.3)',
     backdropFilter: 'blur(8px)',
     WebkitBackdropFilter: 'blur(8px)',
     border: '1px solid rgba(255, 255, 255, 0.1)',
@@ -109,14 +136,12 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
           as={motion.div}
           position="relative"
           w="100%"
-          display={isFlipped ? "none" : "block"}
           sx={gradientSx}
-          animate={{
-            rotateY: isFlipped ? 180 : 0
-          }}
+          initial="frontInitial"
+          animate={isFlipped ? "frontFlipped" : "frontInitial"}
+          variants={cardVariants}
           style={{ 
             transformStyle: 'preserve-3d',
-            transition: 'transform 1.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
             backfaceVisibility: 'hidden',
             ...cardStyle
           }}
@@ -133,17 +158,16 @@ const CardFlip = ({ frontContent, backContent, gradientColors }: CardFlipProps) 
         {/* Back of card */}
         <Box
           as={motion.div}
-          position="relative"
+          position="absolute"
+          top="0"
+          left="0"
           w="100%"
-          display={isFlipped ? "block" : "none"}
           sx={gradientSx}
-          initial={{ rotateY: 180 }}
-          animate={{
-            rotateY: isFlipped ? 0 : 180
-          }}
+          initial="backInitial"
+          animate={isFlipped ? "backFlipped" : "backInitial"}
+          variants={cardVariants}
           style={{ 
             transformStyle: 'preserve-3d',
-            transition: 'transform 1.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
             backfaceVisibility: 'hidden',
             ...cardStyle
           }}

@@ -30,7 +30,6 @@ const GradientTypewriter = ({
   const [isGradientAnimating, setIsGradientAnimating] = useState(false);
   const controls = useAnimation();
   const flowControls = useAnimation();
-  const glowControls = useAnimation();
   const shadowControls = useAnimation();
   const textRef = useRef<HTMLDivElement>(null);
   const hasTypedRef = useRef(false); 
@@ -54,39 +53,18 @@ const GradientTypewriter = ({
         setIsTypingComplete(true);
         hasTypedRef.current = true; // Mark typing as completed
         
-        // Start subtle glow animation
-        startGlowAnimation();
       }
     }, typingSpeed);
 
     return () => clearInterval(typingInterval);
   }, [text, typingSpeed]);
   
-  // Start the glow animation
-  const startGlowAnimation = () => {
-    glowControls.start({
-      transition: {
-        duration: 2,
-        repeat: Infinity,
-        repeatType: "reverse"
-      }
-    });
-  };
 
   // Handle click to start gradient animation
   const handleClick = () => {
     if (isTypingComplete && !isGradientAnimating) {
       setIsGradientAnimating(true);
       
-      // Stop glow animation
-      glowControls.stop();
-      glowControls.set({ textShadow: "none" });
-      
-      // Remove the shadow
-      shadowControls.start({
-        textShadow: "none",
-        transition: { duration: 0.5 }
-      });
       
       // fill from left to right
       controls.start({

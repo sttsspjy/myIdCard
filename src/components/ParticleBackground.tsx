@@ -17,67 +17,63 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
     await loadFull(engine);
   }, []);
 
-  // Cosmic theme configuration
-  const blackBackground = "#000000"; // Pitch black background for particles ON
-  const grayBackground = "#18181b"; // Gray background for particles OFF
+  // Export bioText for use in other components
+  const cosmicGradientBackground = `
+    radial-gradient(ellipse at top,rgb(19, 11, 34) 0%,rgb(12, 4, 20) 40%, transparent 90%),
+    radial-gradient(ellipse at left,rgb(6, 27, 31) 0%, transparent 75%),
+    radial-gradient(ellipse at bottom,rgb(29, 5, 5) 0%, transparent 75%),
+    radial-gradient(ellipse at right,rgb(20, 31, 5) 0%, transparent 75%),
+    linear-gradient(135deg, #000000 0%,rgb(9, 0, 17) 50%,rgb(0, 4, 14) 100%)
+  `;
+
   
   // Configuration for particles
   const particlesConfig: ISourceOptions = {
     fullScreen: {
       enable: false
     },
-    fpsLimit: 60,
+    fpsLimit: 30, 
     particles: {
       number: {
-        value: 210, // More stars
+        value: isMobile ? 80 : 120, 
         density: {
           enable: true,
-          value_area: 1000
+          value_area: 1200
         }
       },
       color: {
-        value: ["#ffffff", "#77ccff", "#ff88cc", "#ffcc66", "#88ff88", "#aa88ff"], // Multi-colored stars
+        value: ["#ffffff", "#77ccff", "#ff88cc", "#ffcc66", "#88ff88", "#aa88ff"],
       },
       shape: {
         type: "circle"
       },
       opacity: {
-        value: 1,
-        random: true,
-        anim: {
-          enable: true,
-          speed: 0.02, // Even slower opacity animation
-          opacity_min: 0.4, // Higher minimum opacity
-          sync: false
-        }
+        value: 0.8, 
+        random: false, 
       },
       size: {
         value: 3,
-        random: true
+        random: true,
+        anim: {
+          enable: false
+        }
       },
-      // Linking only near cursor
       links: {
         enable: true,
-        distance: isMobile ? 100 : 160, // Shorter distance on mobile
-        color: "rgb(255, 255, 255)", // Very transparent lines
-        opacity: 0.3,
-        width: 1
+        distance: 120,
+        color: "rgba(255, 255, 255, 0.2)",
+        opacity: 0.4,
+        width: 0.8
       },
       move: {
         enable: true,
-        speed: 0.3,
+        speed: 0.2,
         direction: "none",
-        random: true,
+        random: false,
         straight: false,
-        out_mode: "bounce", // Changed from "out" to "bounce" to trap particles
-        bounce: true,
-        attract: {
-          enable: false,
-          rotateX: 600,
-          rotateY: 1200
-        }
+        out_mode: "out",
+        bounce: false,
       },
-      // Disable collisions
       collisions: {
         enable: false
       }
@@ -86,66 +82,66 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ children }) => 
       detectsOn: "window",
       events: {
         onHover: {
-          enable: true,
-          mode: "connect" // Connect lines on hover
+          enable: false,
         },
         onClick: {
-          enable: false // Disable click interaction
+          enable: false
         },
         resize: true
-      },
-      modes: {
-        connect: {
-          distance: isMobile ? 100 : 140,  // Shorter distance on mobile
-          links: {
-            opacity: 0.3 // Faint connections
-          },
-          radius: isMobile ? 100 : 130
-        }
       }
     },
-    retina_detect: true,
+    retina_detect: false,
     background: {
-      color: blackBackground,
+      color: "transparent",
       position: "50% 50%",
       repeat: "no-repeat",
       size: "cover"
     }
   };
 
-  // Update document body background color based on particles state
   useEffect(() => {
     const documentBody = document.body;
-    
-    // Set transition property first
-    documentBody.style.transition = "background-color 0.8s ease";
-    
-    // Use setTimeout to ensure transition is applied
+    documentBody.style.transition = "background 0.8s ease";
     setTimeout(() => {
-      // Then update the background color
-      if (particlesEnabled) {
-        documentBody.style.backgroundColor = blackBackground;
-      } else {
-        documentBody.style.backgroundColor = grayBackground;
-      }
-    }, 10); // Tiny delay to ensure transition is registered
+      documentBody.style.background = cosmicGradientBackground;
+    }, 10);
     
-  }, [particlesEnabled]);
+  }, []);
 
   return (
-    <Box 
-      className="particles-container"
-    >
-      {particlesEnabled && (
+    <>
+      <Box 
+        position="fixed"
+        top="0"
+        left="0"
+        width="100%"
+        height="100%"
+        background={cosmicGradientBackground}
+        zIndex="-1"
+      />
+      
+      {/* Particles layer with fade animation */}
+      <Box 
+        className="particles-container"
+        position="fixed"
+        top="0"
+        left="0"
+        width="100%"
+        height="100%"
+        zIndex="0"
+        pointerEvents="none"
+        opacity={particlesEnabled ? 1 : 0}
+        transition="opacity 0.8s ease"
+      >
         <Particles
           id="tsparticles"
           init={particlesInit}
           options={particlesConfig}
           className="particles-canvas"
         />
-      )}
-      {children}
-    </Box>
+        {children}
+      </Box>
+    </>
   );
 };
 

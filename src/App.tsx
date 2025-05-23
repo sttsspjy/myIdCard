@@ -2,7 +2,7 @@ import { ChakraProvider, Box, extendTheme } from '@chakra-ui/react'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import { useState, useCallback } from 'react'
 import Navbar from './components/Navbar'
-import Home from './pages/Home'
+import Home, { bioText } from './pages/Home'
 import CardFlip from './components/CardFlip'
 import CardBack from './components/CardBack'
 import GradientTypewriter from './components/GradientTypewriter'
@@ -41,17 +41,20 @@ const theme = extendTheme({
 
 function App() {
   const [isNameClicked, setIsNameClicked] = useState(false);
+  const [isBioTypingComplete, setIsBioTypingComplete] = useState(false);
   
-  const bioTextLength = 300;
+  const bioTextLength = bioText.length;
   const typingSpeed = 45; 
-  const bioTypingTime = (bioTextLength * typingSpeed) / 1000;
+  const bioTypingTime = (bioTextLength * typingSpeed) / 700;
   
-  // Use useCallback to prevent unnecessary re-renders
   const handleNameClick = useCallback(() => {
     setIsNameClicked(true);
   }, []);
   
-  // Shoutouts text for card back
+  const handleBioTypingComplete = useCallback(() => {
+    setIsBioTypingComplete(true);
+  }, []);
+  
   const shoutOuts = `React, Chakra UI, Cursor.`;
   
   return (
@@ -117,9 +120,10 @@ function App() {
                       className="main-content"
                     >
                       <CardFlip 
-                        frontContent={<Home isNameClicked={isNameClicked} />}
+                        frontContent={<Home isNameClicked={isNameClicked} onBioTypingComplete={handleBioTypingComplete} isBioTypingComplete={isBioTypingComplete} />}
                         backContent={<CardBack shoutOuts={shoutOuts} />}
                         gradientColors={["#FFF7B3", "#FFE4E1", "#B3E5FC", "#E1BEE7"]}
+                        showFlipButton={isBioTypingComplete}
                       />
                     </Box>
                   </Box>
