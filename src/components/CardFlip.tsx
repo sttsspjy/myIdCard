@@ -114,17 +114,30 @@ const CardFlip = ({ frontContent, backContent, gradientColors, showFlipButton = 
     </VStack>
   );
 
-  // Frosted glass card style
-  const cardStyle = {
-    background: 'rgba(0, 0, 0, 0.3)',
-    backdropFilter: 'blur(8px)',
-    WebkitBackdropFilter: 'blur(8px)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
-    boxShadow: '0 0 15px 2px rgba(255, 255, 255, 0.15)',
-  };
-  
   return (
-    <Box w="100%" position="relative">
+    <Box 
+      w="100%" 
+      position="relative"
+      style={{
+        isolation: 'isolate',
+        zIndex: 0,
+        transform: 'translateZ(0)',
+      }}
+    >
+      {/* Invisible backdrop-filter helper for Firefox */}
+      <Box
+        position="absolute"
+        top="0"
+        left="0"
+        width="100%"
+        height="100%"
+        pointerEvents="none"
+        style={{
+          backdropFilter: 'blur(0px)',
+          zIndex: -1,
+        }}
+      />
+      
       {/* Card container */}
       <Box
         position="relative"
@@ -136,15 +149,21 @@ const CardFlip = ({ frontContent, backContent, gradientColors, showFlipButton = 
           as={motion.div}
           position="relative"
           w="100%"
-          sx={gradientSx}
           initial="frontInitial"
           animate={isFlipped ? "frontFlipped" : "frontInitial"}
           variants={cardVariants}
           style={{ 
             transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
-            ...cardStyle
-          }}
+            background: 'rgba(15, 15, 15, 0.3)',
+            backdropFilter: 'blur(3px)',
+            WebkitBackdropFilter: 'blur(3px)',
+            borderRadius: '12px',
+            boxShadow: '0 0 15px 2px rgba(255, 255, 255, 0.15)',
+            isolation: 'isolate',
+            willChange: 'transform',
+            zIndex: 1,
+          } as React.CSSProperties}
         >
           {/* Inner content box */}
           <Box
@@ -162,15 +181,21 @@ const CardFlip = ({ frontContent, backContent, gradientColors, showFlipButton = 
           top="0"
           left="0"
           w="100%"
-          sx={gradientSx}
           initial="backInitial"
           animate={isFlipped ? "backFlipped" : "backInitial"}
           variants={cardVariants}
           style={{ 
             transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
-            ...cardStyle
-          }}
+            background: 'rgba(15, 15, 15, 0.3)',
+            backdropFilter: 'blur(3px)',
+            WebkitBackdropFilter: 'blur(3px)',
+            borderRadius: '12px',
+            boxShadow: '0 0 15px 2px rgba(255, 255, 255, 0.15)',
+            isolation: 'isolate',
+            willChange: 'transform',
+            zIndex: 1,
+          } as React.CSSProperties}
         >
           {/* Inner content box */}
           <Box
